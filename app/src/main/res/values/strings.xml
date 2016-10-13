@@ -10,4 +10,6 @@
     <string name="label_password">Password:</string>
     <string name="type_email">Type the email</string>
     <string name="type_password">Type the password</string>
+    <string name="provide_valid_email">Provide a valid email address</string>
+
 </resources>
