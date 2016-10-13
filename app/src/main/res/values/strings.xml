@@ -12,4 +12,10 @@
     <string name="type_password">Type the password</string>
     <string name="provide_valid_email">Provide a valid email address</string>
 
+    <!-- Images description -->
+    <string name="description_grades">Grades</string>
+    <string name="description_absences">Absences</string>
+    <string name="description_subjects">Subjects</string>
+    <string name="description_notes">Notes</string>
+
 </resources>

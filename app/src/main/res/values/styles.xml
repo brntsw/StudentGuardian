@@ -22,7 +22,7 @@
     </style>
 
     <style name="Theme.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">@dimen/titulo_toolbar</item>
+        <item name="android:textSize">@dimen/title_toolbar</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 

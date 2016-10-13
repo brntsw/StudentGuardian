@@ -3,14 +3,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ui.activity.HomeActivity">
 
+    <include android:id="@+id/toolbar" layout="@layout/toolbar" />
+
     <TextView
+        android:id="@+id/tv_responsible_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:textStyle="bold"
+        android:text="Mother A"
+        android:textSize="@dimen/title_responsible_name"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:layout_below="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_student_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name of the student"
+        android:textSize="@dimen/title_student_name"
+        android:paddingLeft="20dp"
+        android:layout_below="@+id/tv_responsible_name" />
+
+
+    <LinearLayout
+        android:id="@+id/layout_first_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/tv_student_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/tv_grades"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_grades"
+            android:textStyle="bold"
+            android:drawableTop="@drawable/grades"
+            android:gravity="center_horizontal"
+            android:background="@drawable/background_home_item"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/tv_absences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_absences"
+            android:textStyle="bold"
+            android:drawableTop="@drawable/absences"
+            android:gravity="center_horizontal"
+            android:background="@drawable/background_home_item"
+            android:layout_marginStart="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_second_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/layout_first_row"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/tv_subjects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_subjects"
+            android:textStyle="bold"
+            android:drawableTop="@drawable/subjects"
+            android:gravity="center_horizontal"
+            android:background="@drawable/background_home_item"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/tv_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_notes"
+            android:textStyle="bold"
+            android:drawableTop="@drawable/notes"
+            android:gravity="center_horizontal"
+            android:background="@drawable/background_home_item"
+            android:layout_marginStart="20dp" />
+
+    </LinearLayout>
+
+
 </RelativeLayout>
