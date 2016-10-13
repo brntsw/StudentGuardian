@@ -15,7 +15,8 @@
         android:text="Mother A"
         android:textSize="@dimen/title_responsible_name"
         android:paddingTop="20dp"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:layout_below="@+id/toolbar" />
 
     <TextView
@@ -24,7 +25,8 @@
         android:layout_height="wrap_content"
         android:text="Name of the student"
         android:textSize="@dimen/title_student_name"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:layout_below="@+id/tv_responsible_name" />
 
 

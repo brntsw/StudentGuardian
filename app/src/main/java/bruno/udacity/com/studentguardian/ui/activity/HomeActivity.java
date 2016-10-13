@@ -1,5 +1,6 @@
 package bruno.udacity.com.studentguardian.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -56,7 +57,8 @@ public class HomeActivity extends AppCompatActivity {
         tvGrades.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "Grades", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, GradesActivity.class);
+                startActivity(intent);
             }
         });
 
