@@ -35,7 +35,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Subject subject = subjects.get(position);
         if(subject != null){
             holder.apply(subject);
@@ -52,7 +52,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 notifyItemChanged(selectedPosition);
-                selectedPosition = position;
+                selectedPosition = holder.getAdapterPosition();
                 notifyItemChanged(selectedPosition);
             }
         });

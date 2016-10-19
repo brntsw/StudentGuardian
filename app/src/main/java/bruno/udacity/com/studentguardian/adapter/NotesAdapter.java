@@ -39,7 +39,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Note note = notes.get(position);
         if(note != null){
             holder.apply(note);
@@ -56,7 +56,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 notifyItemChanged(selectedPosition);
-                selectedPosition = position;
+                selectedPosition = holder.getAdapterPosition();
                 notifyItemChanged(selectedPosition);
             }
         });
