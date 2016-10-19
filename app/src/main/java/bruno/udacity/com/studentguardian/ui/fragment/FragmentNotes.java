@@ -76,7 +76,7 @@ public class FragmentNotes extends Fragment {
         note2.setSubjectId(101);
         note2.setDate("11/10/2016");
         note2.setTitle("Student X ran away from school");
-        note1.setDescription("Aliquam augue nulla, posuere non sollicitudin a, accumsan vel odio. Vivamus tristique bibendum lorem ac suscipit. Maecenas et sagittis enim, accumsan facilisis libero. Sed finibus risus a lectus faucibus facilisis");
+        note2.setDescription("Aliquam augue nulla, posuere non sollicitudin a, accumsan vel odio. Vivamus tristique bibendum lorem ac suscipit. Maecenas et sagittis enim, accumsan facilisis libero. Sed finibus risus a lectus faucibus facilisis");
         note2.setPathEvidenceImage("sdcard/randomimage.png");
         note2.setColorGravity(R.color.gravity_urgent);
         notes.add(note2);
