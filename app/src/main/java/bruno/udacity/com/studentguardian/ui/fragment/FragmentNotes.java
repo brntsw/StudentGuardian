@@ -47,7 +47,7 @@ public class FragmentNotes extends Fragment {
         addMockData();
 
         //Fill the Recycler view with the notes
-        adapter = new NotesAdapter(notes);
+        adapter = new NotesAdapter(getActivity(), notes);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerNotes.setLayoutManager(manager);
         recyclerNotes.setItemAnimator(new DefaultItemAnimator());

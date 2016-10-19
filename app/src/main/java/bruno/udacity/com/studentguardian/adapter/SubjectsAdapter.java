@@ -1,9 +1,11 @@
 package bruno.udacity.com.studentguardian.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import butterknife.ButterKnife;
 public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHolder> {
 
     private List<Subject> subjects;
+    private int selectedPosition = -1;
 
     public SubjectsAdapter(List<Subject> subjects){
         this.subjects = subjects;
@@ -32,11 +35,27 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         Subject subject = subjects.get(position);
         if(subject != null){
             holder.apply(subject);
         }
+
+        if(selectedPosition == position){
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+        }
+        else{
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notifyItemChanged(selectedPosition);
+                selectedPosition = position;
+                notifyItemChanged(selectedPosition);
+            }
+        });
     }
 
     @Override

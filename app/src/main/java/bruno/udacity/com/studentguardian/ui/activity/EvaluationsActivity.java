@@ -19,7 +19,7 @@ import bruno.udacity.com.studentguardian.ui.fragment.FragmentSubjects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GradesActivity extends AppCompatActivity {
+public class EvaluationsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -41,7 +41,7 @@ public class GradesActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-        toolbar.setTitle(getString(R.string.description_grades));
+        toolbar.setTitle(getString(R.string.description_evaluations));
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

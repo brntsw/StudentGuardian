@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"
-        android:text="Example of title"/>
+        android:text="Example of title"
+        android:layout_marginBottom="5dp"/>
 
     <TextView
         android:id="@+id/tv_note_date"
@@ -38,7 +39,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey"
-        android:layout_below="@+id/tv_note_description"/>
+        android:background="@color/gray"
+        android:layout_below="@+id/tv_note_description"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

@@ -16,7 +16,6 @@ import java.util.List;
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.adapter.SubjectsAdapter;
 import bruno.udacity.com.studentguardian.model.Subject;
-import bruno.udacity.com.studentguardian.ui.activity.GradesActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

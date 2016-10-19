@@ -1,5 +1,8 @@
 package bruno.udacity.com.studentguardian.adapter;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +23,12 @@ import butterknife.ButterKnife;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
 
+    private Context context;
     private List<Note> notes;
+    private int selectedPosition = -1;
 
-    public NotesAdapter(List<Note> notes){
+    public NotesAdapter(Context context, List<Note> notes){
+        this.context = context;
         this.notes = notes;
     }
 
@@ -33,11 +39,27 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         Note note = notes.get(position);
         if(note != null){
             holder.apply(note);
         }
+
+        if(selectedPosition == position){
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+        }
+        else{
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notifyItemChanged(selectedPosition);
+                selectedPosition = position;
+                notifyItemChanged(selectedPosition);
+            }
+        });
     }
 
     @Override
@@ -68,7 +90,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             tvNoteTitle.setText(note.getTitle());
             tvNoteDate.setText(note.getDate());
             tvNoteDescription.setText(note.getDescription());
-            viewGravity.setBackgroundColor(note.getColorGravity());
+            viewGravity.setBackgroundColor(ContextCompat.getColor(context, note.getColorGravity()));
         }
     }
 

@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.GradesActivity"
+        <activity android:name=".ui.activity.EvaluationsActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.activity.HomeActivity"/>
         <activity android:name=".ui.activity.AbsencesActivity"

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import bruno.udacity.com.studentguardian.R;
 import butterknife.BindView;
@@ -23,8 +22,8 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.tv_student_name)
     TextView tvStudentName;
 
-    @BindView(R.id.tv_grades)
-    TextView tvGrades;
+    @BindView(R.id.tv_evaluations)
+    TextView tvEvaluations;
 
     @BindView(R.id.tv_absences)
     TextView tvAbsences;
@@ -54,10 +53,10 @@ public class HomeActivity extends AppCompatActivity {
     private void handleListeners(){
         //Replace a contentholder with the fragment
 
-        tvGrades.setOnClickListener(new View.OnClickListener() {
+        tvEvaluations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, GradesActivity.class);
+                Intent intent = new Intent(HomeActivity.this, EvaluationsActivity.class);
                 startActivity(intent);
             }
         });

@@ -13,6 +13,7 @@
     <string name="provide_valid_email">Provide a valid email address</string>
 
     <!-- Images description -->
+    <string name="description_evaluations">Evaluations</string>
     <string name="description_grades">Grades</string>
     <string name="description_absences">Absences</string>
     <string name="description_subjects">Subjects</string>
