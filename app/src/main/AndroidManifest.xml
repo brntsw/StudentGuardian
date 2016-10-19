@@ -28,7 +28,17 @@
         <activity android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.GradesActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.activity.HomeActivity"/>
+        <activity android:name=".ui.activity.AbsencesActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.activity.HomeActivity"/>
+        <activity android:name=".ui.activity.SubjectsActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.activity.HomeActivity"/>
+        <activity android:name=".ui.activity.NotesActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.activity.HomeActivity"/>
     </application>
 
 </manifest>

@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="grey">#ddd</color>
+
+    <!-- GRAVITY COLORS -->
+    <color name="gravity_urgent">#F44336</color>
+    <color name="gravity_alert">#FFEB3B</color>
+    <color name="gravity_not_serious">#4CAF50</color>
+
 </resources>

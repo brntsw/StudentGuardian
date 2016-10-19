@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_note_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Example of title"/>
+
+    <TextView
+        android:id="@+id/tv_note_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="19/10/2016"
+        android:layout_toEndOf="@+id/tv_note_title"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/tv_note_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_note_title"
+        android:text="Aliquam augue nulla, posuere non sollicitudin a, accumsan vel odio. Vivamus..."/>
+
+    <View
+        android:id="@+id/view_gravity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toEndOf="@+id/tv_note_description"
+        android:background="@color/gravity_alert"/>
+
+</RelativeLayout>

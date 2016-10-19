@@ -6,6 +6,14 @@ package bruno.udacity.com.studentguardian.model;
 
 public class Subject {
 
+    //Subject Codes
+    //100 - English
+    //101 - Mathematics
+    //102 - History
+    //103 - Chemistry
+    //104 - Physics
+    //105 - Geography
+
     private int code;
     private String name;
 

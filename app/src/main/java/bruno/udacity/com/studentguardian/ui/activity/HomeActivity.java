@@ -65,21 +65,24 @@ public class HomeActivity extends AppCompatActivity {
         tvAbsences.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "Absences", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, AbsencesActivity.class);
+                startActivity(intent);
             }
         });
 
         tvSubjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "Subjects", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, SubjectsActivity.class);
+                startActivity(intent);
             }
         });
 
         tvNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "Notes", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, NotesActivity.class);
+                startActivity(intent);
             }
         });
     }
