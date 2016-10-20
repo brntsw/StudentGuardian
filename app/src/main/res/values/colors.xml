@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="white">#fff</color>
     <color name="gray">#ddd</color>
+    <color name="black">#000</color>
 
     <!-- GRAVITY COLORS -->
     <color name="gravity_urgent">#F44336</color>
