@@ -14,6 +14,7 @@ import java.util.List;
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.model.Note;
 import bruno.udacity.com.studentguardian.model.Subject;
+import bruno.udacity.com.studentguardian.ui.activity.listener.OnRecyclerViewItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,10 +27,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     private Context context;
     private List<Note> notes;
     private int selectedPosition = -1;
+    private OnRecyclerViewItemClickListener listener;
 
     public NotesAdapter(Context context, List<Note> notes){
         this.context = context;
         this.notes = notes;
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener){
+        this.listener = listener;
     }
 
     @Override
@@ -55,11 +61,16 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listener.onRecyclerViewItemClicked(holder.getAdapterPosition(), 1);
                 notifyItemChanged(selectedPosition);
                 selectedPosition = holder.getAdapterPosition();
                 notifyItemChanged(selectedPosition);
             }
         });
+    }
+
+    public Note getItem(int position){
+        return notes.get(position);
     }
 
     @Override

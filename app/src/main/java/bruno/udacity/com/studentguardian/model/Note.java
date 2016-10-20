@@ -1,10 +1,12 @@
 package bruno.udacity.com.studentguardian.model;
 
+import java.io.Serializable;
+
 /**
  * Created by BPardini on 19/10/2016.
  */
 
-public class Note {
+public class Note implements Serializable {
 
     private int id;
     private int subjectId;

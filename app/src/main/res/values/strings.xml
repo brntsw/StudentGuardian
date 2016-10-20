@@ -18,6 +18,7 @@
     <string name="description_absences">Absences</string>
     <string name="description_subjects">Subjects</string>
     <string name="description_notes">Notes</string>
+    <string name="description_note_details">Note details</string>
 
     <string name="label_overall_grade">Mean overall grade:</string>
     <string name="label_name">Name:</string>

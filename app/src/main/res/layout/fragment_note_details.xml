@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_note_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:text="Student X broke the window"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:paddingTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"/>
+
+    <ImageView
+        android:id="@+id/img_proof"
+        android:layout_width="173dp"
+        android:layout_height="174dp"
+        android:src="@drawable/no_image"
+        android:layout_below="@+id/tv_note_title"
+        android:layout_marginStart="20dp"/>
+
+    <View
+        android:id="@+id/view_gravity"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_below="@+id/tv_note_title"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/gravity_urgent"
+        android:layout_toEndOf="@+id/img_proof"/>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Serious"
+        android:layout_toEndOf="@+id/view_gravity"
+        android:layout_below="@+id/tv_note_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_label_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_description"
+        android:textStyle="bold"
+        android:layout_below="@+id/img_proof"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ut at risus odio. Sed sodales diam mauris, eget fringilla nisi luctus vitae. Vivamus id gravida felis, eget maximus nibh. Aenean ut turpis eget leo blandit tincidunt in non nulla. Nunc in libero lacus. Nunc vulputate risus a pharetra ullamcorper. Fusce eget convallis enim."
+        android:layout_below="@+id/img_proof"
+        android:layout_toEndOf="@+id/tv_label_description"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="5dp"/>
+
+</RelativeLayout>
