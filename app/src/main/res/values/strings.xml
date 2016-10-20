@@ -23,5 +23,6 @@
     <string name="label_name">Name:</string>
     <string name="label_grade">Grade:</string>
     <string name="label_description">Description:</string>
+    <string name="label_absences">Absences:</string>
 
 </resources>

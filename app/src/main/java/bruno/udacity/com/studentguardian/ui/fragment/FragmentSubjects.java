@@ -107,21 +107,28 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
     public void onRecyclerViewItemClicked(int position, int id) {
         Subject subject = adapter.getItem(position);
 
-        String activity = args.getString("activity");
+        if(args != null){
+            String activity = args.getString("activity");
 
-        switch (activity){
-            case "evaluations":
-                FragmentEvaluations fragEvaluations = new FragmentEvaluations();
-                args.putInt("codeSubject", subject.getCode());
-                fragEvaluations.setArguments(args);
+            if(activity != null) {
+                switch (activity) {
+                    case "evaluations":
+                        FragmentEvaluations fragEvaluations = new FragmentEvaluations();
+                        args.putInt("codeSubject", subject.getCode());
+                        fragEvaluations.setArguments(args);
 
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, fragEvaluations, FragmentEvaluations.TAG)
-                        .addToBackStack(null)
-                        .commit();
-
-                break;
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, fragEvaluations, FragmentEvaluations.TAG)
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    case "notes":
+                        break;
+                    case "subjectdetails":
+                        break;
+                }
+            }
         }
     }
 }

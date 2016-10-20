@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_grade_item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_subject_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:text="A subject that will appear right here"/>
+
+    <TextView
+        android:id="@+id/tv_label_absences"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_absences"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_below="@+id/tv_subject_title"/>
+
+    <TextView
+        android:id="@+id/tv_absences"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tv_label_absences"
+        android:text="2"
+        android:paddingTop="10dp"
+        android:layout_below="@id/tv_subject_title"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_below="@+id/tv_label_absences"/>
+
+</RelativeLayout>

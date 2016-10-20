@@ -1,5 +1,6 @@
 package bruno.udacity.com.studentguardian.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -47,6 +48,9 @@ public class FragmentEvaluations extends Fragment {
     private List<Evaluation> evaluations;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        Activity activity = getActivity();
+        activity.setTitle(R.string.description_evaluations);
+
         View view = inflater.inflate(R.layout.fragment_evaluations, container, false);
         unbinder = ButterKnife.bind(this, view);
 

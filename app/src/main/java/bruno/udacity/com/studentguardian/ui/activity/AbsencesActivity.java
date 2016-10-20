@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import bruno.udacity.com.studentguardian.R;
+import bruno.udacity.com.studentguardian.ui.fragment.FragmentAbsences;
 import bruno.udacity.com.studentguardian.ui.fragment.FragmentSubjects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +20,7 @@ public class AbsencesActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private FragmentSubjects fragSubjects;
+    private FragmentAbsences fragAbsences;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -50,10 +51,10 @@ public class AbsencesActivity extends AppCompatActivity {
             return;
         }
 
-        fragSubjects = new FragmentSubjects();
+        fragAbsences = new FragmentAbsences();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, fragSubjects)
+                .add(R.id.fragment_container, fragAbsences)
                 .commit();
     }
 
