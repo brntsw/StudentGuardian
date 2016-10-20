@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.adapter.SubjectsAdapter;
 import bruno.udacity.com.studentguardian.model.Subject;
+import bruno.udacity.com.studentguardian.ui.activity.listener.OnRecyclerViewItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -24,7 +26,7 @@ import butterknife.Unbinder;
  * Created by BPardini on 19/10/2016.
  */
 
-public class FragmentSubjects extends Fragment {
+public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClickListener {
 
     @BindView(R.id.recycler_grades)
     RecyclerView recyclerSubjects;
@@ -33,6 +35,7 @@ public class FragmentSubjects extends Fragment {
     private List<Subject> subjects;
 
     private Unbinder unbinder;
+    private Bundle args;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         Activity activity = getActivity();
@@ -42,6 +45,8 @@ public class FragmentSubjects extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         subjects = new ArrayList<>();
+
+        args = getArguments();
 
         return view;
     }
@@ -57,6 +62,7 @@ public class FragmentSubjects extends Fragment {
         recyclerSubjects.setLayoutManager(manager);
         recyclerSubjects.setItemAnimator(new DefaultItemAnimator());
         recyclerSubjects.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -97,4 +103,25 @@ public class FragmentSubjects extends Fragment {
         subjects.add(subject6);
     }
 
+    @Override
+    public void onRecyclerViewItemClicked(int position, int id) {
+        Subject subject = adapter.getItem(position);
+
+        String activity = args.getString("activity");
+
+        switch (activity){
+            case "evaluations":
+                FragmentEvaluations fragEvaluations = new FragmentEvaluations();
+                args.putInt("codeSubject", subject.getCode());
+                fragEvaluations.setArguments(args);
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, fragEvaluations, FragmentEvaluations.TAG)
+                        .addToBackStack(null)
+                        .commit();
+
+                break;
+        }
+    }
 }

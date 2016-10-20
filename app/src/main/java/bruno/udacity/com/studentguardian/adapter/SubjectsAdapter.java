@@ -12,6 +12,7 @@ import java.util.List;
 
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.model.Subject;
+import bruno.udacity.com.studentguardian.ui.activity.listener.OnRecyclerViewItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,9 +24,14 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
 
     private List<Subject> subjects;
     private int selectedPosition = -1;
+    private OnRecyclerViewItemClickListener listener;
 
     public SubjectsAdapter(List<Subject> subjects){
         this.subjects = subjects;
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener){
+        this.listener = listener;
     }
 
     @Override
@@ -51,11 +57,16 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listener.onRecyclerViewItemClicked(holder.getAdapterPosition(), 1);
                 notifyItemChanged(selectedPosition);
                 selectedPosition = holder.getAdapterPosition();
                 notifyItemChanged(selectedPosition);
             }
         });
+    }
+
+    public Subject getItem(int position){
+        return subjects.get(position);
     }
 
     @Override

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_label_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_name"
+        android:textStyle="bold"
+        android:paddingBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evaluation XYZ Math"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_toEndOf="@+id/tv_label_name"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12/09/2016"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/tv_label_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_grade"
+        android:textStyle="bold"
+        android:layout_below="@+id/tv_label_name"
+        android:paddingBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6,5"
+        android:layout_toEndOf="@+id/tv_label_grade"
+        android:layout_below="@+id/tv_label_name"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_label_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_label_grade"
+        android:text="@string/label_description"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Something amazing about the test is written right here"
+        android:layout_toEndOf="@+id/tv_label_description"
+        android:layout_below="@+id/tv_label_grade"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_below="@+id/tv_description"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

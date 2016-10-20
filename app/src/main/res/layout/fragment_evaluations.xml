@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="bruno.udacity.com.studentguardian.ui.fragment.FragmentEvaluations">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_evaluations"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <View
+            android:id="@+id/line_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_label_overall_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_overall_grade"
+            android:textSize="18sp"
+            android:layout_below="@id/line_separator"/>
+
+        <TextView
+            android:id="@+id/tv_overall_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_label_overall_grade"
+            android:layout_below="@+id/line_separator"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="5.9"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_student_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_label_overall_grade"
+            android:paddingTop="5dp"
+            android:text="The student X will not pass"
+            android:textSize="18sp"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

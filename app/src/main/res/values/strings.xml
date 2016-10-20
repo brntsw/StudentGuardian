@@ -19,4 +19,9 @@
     <string name="description_subjects">Subjects</string>
     <string name="description_notes">Notes</string>
 
+    <string name="label_overall_grade">Mean overall grade:</string>
+    <string name="label_name">Name:</string>
+    <string name="label_grade">Grade:</string>
+    <string name="label_description">Description:</string>
+
 </resources>

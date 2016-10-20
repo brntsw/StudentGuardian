@@ -10,6 +10,15 @@ public class Evaluation {
     private TypeEvaluation typeEvaluation;
     private String description;
     private String date;
+    private double grade;
+
+    public int getCodeSubject() {
+        return codeSubject;
+    }
+
+    public void setCodeSubject(int codeSubject) {
+        this.codeSubject = codeSubject;
+    }
 
     public TypeEvaluation getTypeEvaluation() {
         return typeEvaluation;
@@ -33,5 +42,13 @@ public class Evaluation {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
     }
 }
