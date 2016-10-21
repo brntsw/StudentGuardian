@@ -73,32 +73,32 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
 
     private void addMockData(){
         Subject subject1 = new Subject();
-        subject1.setCode(1);
+        subject1.setCode(100);
         subject1.setName("English");
         subjects.add(subject1);
 
         Subject subject2 = new Subject();
-        subject2.setCode(2);
+        subject2.setCode(101);
         subject2.setName("Mathematics");
         subjects.add(subject2);
 
         Subject subject3 = new Subject();
-        subject3.setCode(3);
+        subject3.setCode(102);
         subject3.setName("History");
         subjects.add(subject3);
 
         Subject subject4 = new Subject();
-        subject4.setCode(4);
+        subject4.setCode(103);
         subject4.setName("Chemistry");
         subjects.add(subject4);
 
         Subject subject5 = new Subject();
-        subject5.setCode(5);
+        subject5.setCode(104);
         subject5.setName("Physics");
         subjects.add(subject5);
 
         Subject subject6 = new Subject();
-        subject6.setCode(6);
+        subject6.setCode(105);
         subject6.setName("Geography");
         subjects.add(subject6);
     }
