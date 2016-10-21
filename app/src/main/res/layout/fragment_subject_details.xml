@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_subject_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:text="Subject"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:paddingTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_subject_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_subject_title"
+        android:paddingTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="5dp"
+        android:text="@string/label_description"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ut at risus odio. Sed sodales diam mauris, eget fringilla nisi luctus vitae. Vivamus id gravida felis, eget maximus nibh. Aenean ut turpis eget leo blandit tincidunt in non nulla. Nunc in libero lacus. Nunc vulputate risus a pharetra ullamcorper. Fusce eget convallis enim."
+        android:layout_toEndOf="@+id/tv_subject_description"
+        android:layout_below="@+id/tv_subject_title"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_subject_contents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_description"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>

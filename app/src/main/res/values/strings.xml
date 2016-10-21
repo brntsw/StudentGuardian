@@ -29,6 +29,7 @@
     <string name="description_subjects">Subjects</string>
     <string name="description_notes">Notes</string>
     <string name="description_note_details">Note details</string>
+    <string name="description_subject_details">Subject details</string>
 
     <string name="label_overall_grade">Mean overall grade:</string>
     <string name="label_name">Name:</string>
@@ -36,6 +37,12 @@
     <string name="label_description">Description:</string>
     <string name="label_absences">Absences:</string>
     <string name="label_thanks">Thanks!</string>
+    <string name="label_content">Content:</string>
+
+    <!-- Gravity notes -->
+    <string name="label_not_serious">Not serious</string>
+    <string name="label_serious">Serious</string>
+    <string name="label_alert">Alert</string>
 
     <string name="app_version">App version 1.0.0</string>
     <string name="app_rights_principal">Copyright @ StudentGuardian</string>

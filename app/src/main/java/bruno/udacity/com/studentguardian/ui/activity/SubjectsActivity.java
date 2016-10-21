@@ -50,7 +50,11 @@ public class SubjectsActivity extends AppCompatActivity {
             return;
         }
 
+        Bundle args = new Bundle();
+        args.putString("activity", "subjectdetails");
+
         fragSubjects = new FragmentSubjects();
+        fragSubjects.setArguments(args);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, fragSubjects)

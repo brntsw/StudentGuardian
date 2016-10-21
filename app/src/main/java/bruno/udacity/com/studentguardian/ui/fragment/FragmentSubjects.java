@@ -111,10 +111,10 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
             String activity = args.getString("activity");
 
             if(activity != null) {
+                args.putInt("codeSubject", subject.getCode());
                 switch (activity) {
                     case "evaluations":
                         FragmentEvaluations fragEvaluations = new FragmentEvaluations();
-                        args.putInt("codeSubject", subject.getCode());
                         fragEvaluations.setArguments(args);
 
                         getActivity().getSupportFragmentManager()
@@ -123,9 +123,15 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
                                 .addToBackStack(null)
                                 .commit();
                         break;
-                    case "notes":
-                        break;
                     case "subjectdetails":
+                        FragmentSubjectDetails fragSubjectDetails = new FragmentSubjectDetails();
+                        fragSubjectDetails.setArguments(args);
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, fragSubjectDetails, FragmentSubjectDetails.TAG)
+                                .addToBackStack(null)
+                                .commit();
                         break;
                 }
             }

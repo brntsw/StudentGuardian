@@ -3,6 +3,7 @@ package bruno.udacity.com.studentguardian.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,12 @@ public class FragmentNoteDetails extends Fragment {
     @BindView(R.id.img_proof)
     ImageView imgProof;
 
+    @BindView(R.id.view_gravity)
+    View viewGravity;
+
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
+
     @BindView(R.id.tv_description)
     TextView tvDescription;
 
@@ -54,6 +61,20 @@ public class FragmentNoteDetails extends Fragment {
 
         if(note != null){
             tvNoteTitle.setText(note.getTitle());
+            viewGravity.setBackgroundColor(ContextCompat.getColor(getActivity(), note.getColorGravity()));
+
+            switch (note.getColorGravity()){
+                case R.color.gravity_alert:
+                    tvStatus.setText(R.string.label_alert);
+                    break;
+                case R.color.gravity_urgent:
+                    tvStatus.setText(R.string.label_serious);
+                    break;
+                case R.color.gravity_not_serious:
+                    tvStatus.setText(R.string.label_not_serious);
+                    break;
+            }
+
             tvDescription.setText(note.getDescription());
         }
     }
