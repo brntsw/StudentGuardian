@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import bruno.udacity.com.studentguardian.R;
+import bruno.udacity.com.studentguardian.remote.LoginSync;
 import bruno.udacity.com.studentguardian.utils.LoginUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,10 +53,12 @@ public class LoginActivity extends AppCompatActivity {
                 LoginUtils utils = new LoginUtils(coordinatorLogin);
 
                 if(utils.validateLoginFields(editEmail, editPassword)){
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    LoginSync.initializeSyncAdapter(LoginActivity.this);
+
+                    /*Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
 
-                    LoginActivity.this.finish();
+                    LoginActivity.this.finish();*/
                 }
             }
         });

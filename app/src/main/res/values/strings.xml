@@ -44,6 +44,10 @@
     <string name="label_serious">Serious</string>
     <string name="label_alert">Alert</string>
 
+    <!-- SyncAdapter related -->
+    <string name="sync_account_type">udacity.com.studentguardian</string>
+    <string name="content_authority">bruno.udacity.com.studentguardian</string>
+
     <string name="app_version">App version 1.0.0</string>
     <string name="app_rights_principal">Copyright @ StudentGuardian</string>
 
