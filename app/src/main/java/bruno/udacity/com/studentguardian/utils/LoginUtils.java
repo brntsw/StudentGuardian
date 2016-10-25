@@ -23,7 +23,7 @@ public class LoginUtils {
     }
 
     public boolean validateLoginFields(EditText editEmail, EditText editPassword){
-        if(editEmail.getText().toString().equals("")){
+        if(editEmail.getText().toString().trim().equals("")){
             Snackbar.make(layout, R.string.type_email, Snackbar.LENGTH_SHORT).show();
             return false;
         }
@@ -33,7 +33,7 @@ public class LoginUtils {
             return false;
         }
 
-        if(editPassword.getText().toString().equals("")){
+        if(editPassword.getText().toString().trim().equals("")){
             Snackbar.make(layout, R.string.type_password, Snackbar.LENGTH_SHORT).show();
             return false;
         }

@@ -1,6 +1,7 @@
 package bruno.udacity.com.studentguardian.ui.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import bruno.udacity.com.studentguardian.R;
+import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
+import bruno.udacity.com.studentguardian.model.User;
+import bruno.udacity.com.studentguardian.provider.UserProvider;
 import bruno.udacity.com.studentguardian.ui.fragment.DialogFragmentAbout;
 import bruno.udacity.com.studentguardian.ui.fragment.DialogFragmentEvaluate;
 import butterknife.BindView;
@@ -54,6 +58,17 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
 
         handleListeners();
+
+        UserProvider userProvider = new UserProvider();
+        Cursor cursor = userProvider.query(StudentGuardianContract.UserEntry.CONTENT_URI, null, null, null, StudentGuardianContract.UserEntry.COLUMN_NAME);
+
+        if(cursor != null){
+            if(cursor.moveToNext()){
+                String name = cursor.getString(cursor.getColumnIndex(StudentGuardianContract.UserEntry.COLUMN_NAME));
+
+                tvResponsibleName.setText(name);
+            }
+        }
     }
 
     @Override

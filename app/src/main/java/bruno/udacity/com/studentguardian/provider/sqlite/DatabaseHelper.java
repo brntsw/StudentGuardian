@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " (" + StudentGuardianContract.UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     StudentGuardianContract.UserEntry.COLUMN_EMAIL + " TEXT NOT NULL, " +
                     StudentGuardianContract.UserEntry.COLUMN_PASSWORD + " TEXT NOT NULL," +
+                    StudentGuardianContract.UserEntry.COLUMN_PROFILE + " INTEGER NOT NULL " +
                     StudentGuardianContract.UserEntry.COLUMN_NAME + " TEXT NOT NULL," +
                     StudentGuardianContract.UserEntry.COLUMN_DATE_BIRTH + " TEXT NOT NULL);";
 

@@ -30,6 +30,7 @@ public class StudentGuardianContract {
         public static final String COLUMN_EMAIL = "email";
         public static final String COLUMN_PASSWORD = "password";
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_PROFILE = "profile";
         public static final String COLUMN_DATE_BIRTH = "date_birth";
 
         public static Uri buildUserUri(long id) {
