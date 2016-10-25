@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import bruno.udacity.com.studentguardian.R;
@@ -45,10 +44,8 @@ public class LoginSync extends AbstractThreadedSyncAdapter {
 
     ContentResolver contentResolver;
 
-    public LoginSync(Context context, boolean autoInitialize, User user) {
+    public LoginSync(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-
-        this.user = user;
 
         contentResolver = context.getContentResolver();
     }
@@ -58,8 +55,8 @@ public class LoginSync extends AbstractThreadedSyncAdapter {
         Log.d(LOG_TAG, "Starting sync");
 
         //Get the user and the password from the user input
-        String email = user.getEmail();
-        String password = user.getPassword();
+        String email = "jane.stewart@gmail.com";
+        String password = "ilovecats";
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
