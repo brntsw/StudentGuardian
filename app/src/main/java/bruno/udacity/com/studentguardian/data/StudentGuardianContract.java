@@ -14,6 +14,7 @@ public class StudentGuardianContract {
     public static final String CONTENT_AUTHORITY = "bruno.udacity.com.studentguardian";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_USER = "user";
+    public static final String PATH_SUBJECT = "subject";
 
     public static final class UserEntry implements BaseColumns{
         public static final Uri CONTENT_URI =
@@ -21,8 +22,6 @@ public class StudentGuardianContract {
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_USER;
-        public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_USER;
 
         // Table name
         public static final String TABLE_NAME = "user";
@@ -33,6 +32,21 @@ public class StudentGuardianContract {
         public static final String COLUMN_PROFILE = "profile";
         public static final String COLUMN_DATE_BIRTH = "date_birth";
         public static final String COLUMN_LOGGED = "logged";
+
+        public static Uri buildUserUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+    }
+
+    public static final class SubjectEntry implements BaseColumns{
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_SUBJECT).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_SUBJECT;
+
+        public static final String COLUMN_CODE = "code";
+        public static final String COLUMN_NAME = "name";
 
         public static Uri buildUserUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

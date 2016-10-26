@@ -2,7 +2,6 @@ package bruno.udacity.com.studentguardian.ui.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
-import bruno.udacity.com.studentguardian.provider.UserProvider;
 import bruno.udacity.com.studentguardian.ui.fragment.DialogFragmentAbout;
 import bruno.udacity.com.studentguardian.ui.fragment.DialogFragmentEvaluate;
 import butterknife.BindView;

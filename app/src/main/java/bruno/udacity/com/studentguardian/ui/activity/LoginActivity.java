@@ -1,6 +1,5 @@
 package bruno.udacity.com.studentguardian.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,7 @@ import android.widget.EditText;
 
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.model.User;
-import bruno.udacity.com.studentguardian.remote.LoginSync;
-import bruno.udacity.com.studentguardian.task.LoginTask;
+import bruno.udacity.com.studentguardian.remote.task.LoginTask;
 import bruno.udacity.com.studentguardian.utils.LoginUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;

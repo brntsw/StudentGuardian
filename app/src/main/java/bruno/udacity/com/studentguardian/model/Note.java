@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Note implements Serializable {
 
     private int id;
-    private int subjectId;
+    private int codeSubject;
     private String title;
     private String description;
     private String date;
@@ -24,12 +24,12 @@ public class Note implements Serializable {
         this.id = id;
     }
 
-    public int getSubjectId() {
-        return subjectId;
+    public int getCodeSubject() {
+        return codeSubject;
     }
 
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
+    public void setCodeSubject(int codeSubject) {
+        this.codeSubject = codeSubject;
     }
 
     public String getTitle() {

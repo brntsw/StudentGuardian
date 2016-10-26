@@ -5,37 +5,14 @@ import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SyncRequest;
 import android.content.SyncResult;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import bruno.udacity.com.studentguardian.R;
-import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
-import bruno.udacity.com.studentguardian.model.User;
-import bruno.udacity.com.studentguardian.provider.UserProvider;
-import bruno.udacity.com.studentguardian.task.JsonReturn;
-import bruno.udacity.com.studentguardian.ui.activity.HomeActivity;
 
 /**
  * Created by BPardini on 24/10/2016.
@@ -61,7 +38,7 @@ public class LoginSync extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         Log.d(LOG_TAG, "Starting sync");
 
-
+        //Network call is done here (Background thread)
     }
 
     public static void initializeSyncAdapter(Context context) {

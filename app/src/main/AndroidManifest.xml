@@ -45,7 +45,7 @@
         
         <provider
             android:authorities="@string/content_authority"
-            android:name=".provider.UserProvider"
+            android:name=".provider.GeneralProvider"
             android:exported="false" />
 
         <!-- SyncAdapter's dummy authentication service -->

@@ -1,4 +1,4 @@
-package bruno.udacity.com.studentguardian.task;
+package bruno.udacity.com.studentguardian.remote.task;
 
 /**
  * Created by BPardini on 25/10/2016.

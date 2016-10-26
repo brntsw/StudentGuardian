@@ -1,4 +1,4 @@
-package bruno.udacity.com.studentguardian.task;
+package bruno.udacity.com.studentguardian.remote.task;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -9,29 +9,21 @@ import android.os.AsyncTask;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
-import bruno.udacity.com.studentguardian.provider.UserProvider;
 import bruno.udacity.com.studentguardian.ui.activity.HomeActivity;
 
 /**
@@ -148,6 +140,14 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
                     userValues.put(StudentGuardianContract.UserEntry.COLUMN_LOGGED, 1);
 
                     context.getContentResolver().insert(StudentGuardianContract.UserEntry.CONTENT_URI, userValues);
+
+                    //Call the SyncAdapter to get all data from network and save it in ContentProvider
+                    // -->> DataSyncAdapter.initializeSyncAdapter(this);
+                    //- Change the name to DataSyncAdapter (LoginSync)
+                    //- Implement the DataSync onPerformSync to call a url and receive the data from ws (almost like LoginTask)
+                    //- Save the data in ContentProvider inside onPerformSync (Look to SunshineWear as example [SunshineSyncAdapter])
+                    //- After saving all the data in ContentProvider, implement a callback function to be called here and then instantiate the User and
+                        //pass the intent to the HomeActivity, which code is below
 
                     User user = new User();
                     user.setEmail(email);

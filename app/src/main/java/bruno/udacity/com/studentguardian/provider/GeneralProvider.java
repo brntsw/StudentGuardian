@@ -22,19 +22,17 @@ import bruno.udacity.com.studentguardian.provider.sqlite.DatabaseHelper;
  * Created by BPardini on 21/10/2016.
  */
 
-public class UserProvider extends ContentProvider {
+public class GeneralProvider extends ContentProvider {
     private SQLiteDatabase db;
 
-    private static HashMap<String, String> STUDENTS_PROJECTION_MAP;
-
     static final int USER = 1;
-    static final int USER_ID = 2;
+    static final int SUBJECT = 2;
 
     static final UriMatcher uriMatcher;
     static{
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(StudentGuardianContract.CONTENT_AUTHORITY, "user", USER);
-        uriMatcher.addURI(StudentGuardianContract.CONTENT_AUTHORITY, "user/#", USER_ID);
+        uriMatcher.addURI(StudentGuardianContract.CONTENT_AUTHORITY, "subject", SUBJECT);
     }
 
     @Override
@@ -52,21 +50,6 @@ public class UserProvider extends ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         qb.setTables("user");
 
-        switch (uriMatcher.match(uri)){
-            case USER:
-                qb.setProjectionMap(STUDENTS_PROJECTION_MAP);
-                break;
-            case USER_ID:
-                qb.appendWhere(StudentGuardianContract.UserEntry._ID + "=" + uri.getPathSegments().get(1));
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown URI " + uri);
-        }
-
-        if(sortOrder == null || sortOrder.equals("")){
-            sortOrder = StudentGuardianContract.UserEntry.COLUMN_NAME;
-        }
-
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         c.setNotificationUri(getContext().getContentResolver(), uri);
 
@@ -81,6 +64,8 @@ public class UserProvider extends ContentProvider {
         switch (match){
             case USER:
                 return StudentGuardianContract.UserEntry.CONTENT_TYPE;
+            case SUBJECT:
+                return StudentGuardianContract.SubjectEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
