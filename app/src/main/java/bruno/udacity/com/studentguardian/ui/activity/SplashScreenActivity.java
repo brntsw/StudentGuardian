@@ -1,21 +1,44 @@
 package bruno.udacity.com.studentguardian.ui.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
 import bruno.udacity.com.studentguardian.R;
+import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
+import bruno.udacity.com.studentguardian.model.User;
 
 public class SplashScreenActivity extends AppCompatActivity {
+
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        final Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+        Cursor cursor = getContentResolver().query(StudentGuardianContract.UserEntry.CONTENT_URI, null, "logged = 1", null, StudentGuardianContract.UserEntry.COLUMN_NAME);
+        if(cursor != null) {
+            if (cursor.moveToNext()) {
+                User user = new User();
+                user.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+                user.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+                user.setDateBirth(cursor.getString(cursor.getColumnIndex("date_birth")));
+                user.setName(cursor.getString(cursor.getColumnIndex("name")));
+                user.setLogged(cursor.getInt(cursor.getColumnIndex("logged")));
+
+                intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
+                intent.putExtra("user", user);
+            }
+            else{
+                intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+            }
+
+            cursor.close();
+        }
 
         new Thread(new Runnable() {
             @Override

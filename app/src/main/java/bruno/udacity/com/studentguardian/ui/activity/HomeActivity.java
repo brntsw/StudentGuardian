@@ -1,5 +1,6 @@
 package bruno.udacity.com.studentguardian.ui.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,9 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.tv_notes)
     TextView tvNotes;
 
+    private Bundle extras;
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,8 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setTitle(getString(R.string.app_name));
 
         setSupportActionBar(toolbar);
+
+        extras = getIntent().getExtras();
     }
 
     @Override
@@ -59,15 +65,10 @@ public class HomeActivity extends AppCompatActivity {
 
         handleListeners();
 
-        UserProvider userProvider = new UserProvider();
-        Cursor cursor = userProvider.query(StudentGuardianContract.UserEntry.CONTENT_URI, null, null, null, StudentGuardianContract.UserEntry.COLUMN_NAME);
+        user = (User) extras.getSerializable("user");
 
-        if(cursor != null){
-            if(cursor.moveToNext()){
-                String name = cursor.getString(cursor.getColumnIndex(StudentGuardianContract.UserEntry.COLUMN_NAME));
-
-                tvResponsibleName.setText(name);
-            }
+        if(user != null) {
+            tvResponsibleName.setText(user.getName());
         }
     }
 
@@ -100,6 +101,15 @@ public class HomeActivity extends AppCompatActivity {
                 showDialogFragmentAbout();
                 return true;
             case R.id.action_logoff:
+                //Updates the user, setting the logged = 0
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(StudentGuardianContract.UserEntry.COLUMN_LOGGED, 0);
+
+                getContentResolver().update(StudentGuardianContract.UserEntry.CONTENT_URI, contentValues, "email = ?", new String[]{user.getEmail()});
+
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+
                 finish();
                 return true;
             default:

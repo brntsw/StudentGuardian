@@ -32,6 +32,7 @@ public class StudentGuardianContract {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_PROFILE = "profile";
         public static final String COLUMN_DATE_BIRTH = "date_birth";
+        public static final String COLUMN_LOGGED = "logged";
 
         public static Uri buildUserUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

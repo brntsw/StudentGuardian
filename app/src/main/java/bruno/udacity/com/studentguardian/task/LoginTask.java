@@ -22,8 +22,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
@@ -58,7 +62,7 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
     }
 
     @Override
-    protected JsonReturn doInBackground(Void... param) {
+    protected JsonReturn doInBackground(Void... voids) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
@@ -71,45 +75,35 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
 
             URL url = new URL(uri.toString());
 
+            JSONObject objParams = new JSONObject();
+            objParams.put("email", user.getEmail());
+            objParams.put("password", user.getPassword());
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            //set the sending type and receiving type to json
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Accept", "application/json");
             urlConnection.setReadTimeout(10000);
             urlConnection.setConnectTimeout(15000);
             urlConnection.setRequestMethod("POST");
+            urlConnection.setDoOutput(true);
 
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("email", user.getEmail())
-                    .appendQueryParameter("password", user.getPassword());
-            String query = builder.build().getEncodedQuery();
-
-            OutputStream os = urlConnection.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(query);
-            writer.flush();
-            writer.close();
-            os.close();
+            //send the json as body of the request
+            OutputStream outputStream = urlConnection.getOutputStream();
+            outputStream.write(objParams.toString().getBytes("UTF-8"));
+            outputStream.close();
 
             urlConnection.connect();
 
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
-                return null;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
+            Reader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
+            StringBuilder sb = new StringBuilder();
+            for (int c; (c = in.read()) >= 0;)
+                sb.append((char)c);
+            String response = sb.toString();
 
-            jsonReturn = new JsonReturn(urlConnection.getResponseCode(), buffer.toString());
-        } catch (IOException e) {
+            jsonReturn = new JsonReturn(urlConnection.getResponseCode(), response);
+        } catch (IOException | JSONException e) {
             jsonReturn = new JsonReturn(999, e.getMessage());
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
@@ -151,11 +145,18 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
                     userValues.put(StudentGuardianContract.UserEntry.COLUMN_NAME, name);
                     userValues.put(StudentGuardianContract.UserEntry.COLUMN_PROFILE, profile);
                     userValues.put(StudentGuardianContract.UserEntry.COLUMN_DATE_BIRTH, dateBirth);
+                    userValues.put(StudentGuardianContract.UserEntry.COLUMN_LOGGED, 1);
 
-                    UserProvider userProvider = new UserProvider();
-                    userProvider.insert(StudentGuardianContract.UserEntry.CONTENT_URI, userValues);
+                    context.getContentResolver().insert(StudentGuardianContract.UserEntry.CONTENT_URI, userValues);
+
+                    User user = new User();
+                    user.setEmail(email);
+                    user.setPassword(user.getPassword());
+                    user.setDateBirth(dateBirth);
+                    user.setName(name);
 
                     Intent intent = new Intent(context, HomeActivity.class);
+                    intent.putExtra("user", user);
                     context.startActivity(intent);
                 }
                 else{

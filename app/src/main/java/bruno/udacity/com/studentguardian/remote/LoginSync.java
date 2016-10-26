@@ -5,14 +5,18 @@ import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,7 +31,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import bruno.udacity.com.studentguardian.R;
+import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
+import bruno.udacity.com.studentguardian.provider.UserProvider;
+import bruno.udacity.com.studentguardian.task.JsonReturn;
+import bruno.udacity.com.studentguardian.ui.activity.HomeActivity;
 
 /**
  * Created by BPardini on 24/10/2016.
@@ -40,7 +48,6 @@ public class LoginSync extends AbstractThreadedSyncAdapter {
     // 60 seconds (1 minute) * 180 = 3 hours
     public static final int SYNC_INTERVAL = 60 * 180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
-    private User user;
 
     ContentResolver contentResolver;
 
@@ -54,107 +61,7 @@ public class LoginSync extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         Log.d(LOG_TAG, "Starting sync");
 
-        //Get the user and the password from the user input
-        String email = "jane.stewart@gmail.com";
-        String password = "ilovecats";
 
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-
-        String loginJsonStr = null;
-
-        String format = "json";
-
-        try{
-            final String LOGIN_URL = "http://brunopardini.com/ws_student_guardian/login.php";
-
-            Uri uri = Uri.parse(LOGIN_URL).buildUpon().build();
-
-            URL url = new URL(uri.toString());
-
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000);
-            urlConnection.setConnectTimeout(15000);
-            urlConnection.setRequestMethod("POST");
-
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("email", email)
-                    .appendQueryParameter("password", password);
-            String query = builder.build().getEncodedQuery();
-
-            OutputStream os = urlConnection.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(query);
-            writer.flush();
-            writer.close();
-            os.close();
-
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
-                return;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
-
-            loginJsonStr = buffer.toString();
-            getUserDataFromJson(loginJsonStr);
-        } catch (IOException | JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-        } finally {
-            if(urlConnection != null){
-                urlConnection.disconnect();
-            }
-            if(reader != null){
-                try{
-                    reader.close();
-                }
-                catch (IOException e){
-                    Log.e(LOG_TAG, "Error closing stream", e);
-                }
-            }
-        }
-    }
-
-    private void getUserDataFromJson(String loginJsonStr) throws JSONException{
-        final String RESPONSE = "response";
-
-        try{
-            JSONObject userJson = new JSONObject(loginJsonStr);
-
-            if(userJson.has(RESPONSE)){
-                int response = userJson.getInt(RESPONSE);
-
-                switch (response){
-                    case 1:
-                        Log.d("Response", "Success");
-                        break;
-                    case 0:
-                        Log.d("Response", "Not found");
-                        break;
-                    case -1:
-                        Log.d("Response", "Error");
-                        break;
-                }
-            }
-        }
-        catch (JSONException e){
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-        }
     }
 
     public static void initializeSyncAdapter(Context context) {

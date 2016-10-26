@@ -107,6 +107,6 @@ public class UserProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+        return db.update("user", contentValues, s, strings);
     }
 }
