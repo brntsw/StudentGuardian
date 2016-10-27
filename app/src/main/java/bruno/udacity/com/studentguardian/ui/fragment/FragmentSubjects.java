@@ -1,6 +1,7 @@
 package bruno.udacity.com.studentguardian.ui.fragment;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.adapter.SubjectsAdapter;
+import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.Subject;
 import bruno.udacity.com.studentguardian.ui.activity.listener.OnRecyclerViewItemClickListener;
 import butterknife.BindView;
@@ -54,7 +56,18 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
     public void onStart(){
         super.onStart();
 
-        addMockData();
+        Cursor cursor = getActivity().getContentResolver().query(StudentGuardianContract.SubjectEntry.CONTENT_URI, null, null, null, StudentGuardianContract.SubjectEntry.COLUMN_NAME);
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                Subject subject = new Subject();
+                subject.setCode(cursor.getInt(cursor.getColumnIndex("code")));
+                subject.setName(cursor.getString(cursor.getColumnIndex("name")));
+
+                subjects.add(subject);
+            }
+
+            cursor.close();
+        }
 
         //Fill the Recycler view with the subjects
         adapter = new SubjectsAdapter(subjects);
@@ -69,38 +82,6 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    private void addMockData(){
-        Subject subject1 = new Subject();
-        subject1.setCode(100);
-        subject1.setName("English");
-        subjects.add(subject1);
-
-        Subject subject2 = new Subject();
-        subject2.setCode(101);
-        subject2.setName("Mathematics");
-        subjects.add(subject2);
-
-        Subject subject3 = new Subject();
-        subject3.setCode(102);
-        subject3.setName("History");
-        subjects.add(subject3);
-
-        Subject subject4 = new Subject();
-        subject4.setCode(103);
-        subject4.setName("Chemistry");
-        subjects.add(subject4);
-
-        Subject subject5 = new Subject();
-        subject5.setCode(104);
-        subject5.setName("Physics");
-        subjects.add(subject5);
-
-        Subject subject6 = new Subject();
-        subject6.setCode(105);
-        subject6.setName("Geography");
-        subjects.add(subject6);
     }
 
     @Override

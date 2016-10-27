@@ -1,5 +1,6 @@
 package bruno.udacity.com.studentguardian.remote.task;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,6 +25,7 @@ import java.net.URL;
 
 import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
+import bruno.udacity.com.studentguardian.remote.DataSyncAdapter;
 import bruno.udacity.com.studentguardian.ui.activity.HomeActivity;
 
 /**
@@ -141,13 +143,9 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
 
                     context.getContentResolver().insert(StudentGuardianContract.UserEntry.CONTENT_URI, userValues);
 
-                    //Call the SyncAdapter to get all data from network and save it in ContentProvider
-                    // -->> DataSyncAdapter.initializeSyncAdapter(this);
-                    //- Change the name to DataSyncAdapter (LoginSync)
-                    //- Implement the DataSync onPerformSync to call a url and receive the data from ws (almost like LoginTask)
-                    //- Save the data in ContentProvider inside onPerformSync (Look to SunshineWear as example [SunshineSyncAdapter])
-                    //- After saving all the data in ContentProvider, implement a callback function to be called here and then instantiate the User and
-                        //pass the intent to the HomeActivity, which code is below
+                    progressDialog.setTitle("Data");
+                    progressDialog.setMessage("Downloading data...");
+                    progressDialog.show();
 
                     User user = new User();
                     user.setEmail(email);
@@ -155,9 +153,14 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
                     user.setDateBirth(dateBirth);
                     user.setName(name);
 
-                    Intent intent = new Intent(context, HomeActivity.class);
-                    intent.putExtra("user", user);
-                    context.startActivity(intent);
+                    //Call the SyncAdapter to get all data from network and save it in ContentProvider
+                    DataSyncAdapter.initializeSyncAdapter((Activity)context, context, user, progressDialog);
+                    // -->> DataSyncAdapter.initializeSyncAdapter(this);
+                    //- Change the name to DataSyncAdapter (DataSyncAdapter)
+                    //- Implement the DataSync onPerformSync to call a url and receive the data from ws (almost like LoginTask)
+                    //- Save the data in ContentProvider inside onPerformSync (Look to SunshineWear as example [SunshineSyncAdapter])
+                    //- After saving all the data in ContentProvider, implement a callback function to be called here and then instantiate the User and
+                        //pass the intent to the HomeActivity, which code is below
                 }
                 else{
                     Log.d("Response", "Not found");

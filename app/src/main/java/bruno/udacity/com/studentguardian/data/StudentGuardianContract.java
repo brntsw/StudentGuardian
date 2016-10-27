@@ -45,10 +45,13 @@ public class StudentGuardianContract {
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_SUBJECT;
 
+        // Table name
+        public static final String TABLE_NAME = "subject";
+
         public static final String COLUMN_CODE = "code";
         public static final String COLUMN_NAME = "name";
 
-        public static Uri buildUserUri(long id) {
+        public static Uri buildSubjectUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }

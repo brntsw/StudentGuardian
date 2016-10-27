@@ -47,8 +47,18 @@ public class GeneralProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        int match = uriMatcher.match(uri);
+
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        qb.setTables("user");
+
+        switch (match){
+            case USER:
+                qb.setTables(StudentGuardianContract.UserEntry.TABLE_NAME);
+                break;
+            case SUBJECT:
+                qb.setTables(StudentGuardianContract.SubjectEntry.TABLE_NAME);
+                break;
+        }
 
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         c.setNotificationUri(getContext().getContentResolver(), uri);
@@ -74,12 +84,28 @@ public class GeneralProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
-        long rowId = db.insert("user", "", contentValues);
+        int match = uriMatcher.match(uri);
 
-        if(rowId > 0){
-            Uri returnUri = StudentGuardianContract.UserEntry.buildUserUri(rowId);
-            getContext().getContentResolver().notifyChange(returnUri, null);
-            return returnUri;
+        long rowId;
+
+        switch (match){
+            case USER:
+                rowId = db.insert(StudentGuardianContract.UserEntry.TABLE_NAME, "", contentValues);
+
+                if(rowId > 0){
+                    Uri returnUri = StudentGuardianContract.UserEntry.buildUserUri(rowId);
+                    getContext().getContentResolver().notifyChange(returnUri, null);
+                    return returnUri;
+                }
+                break;
+            case SUBJECT:
+                rowId = db.insert(StudentGuardianContract.SubjectEntry.TABLE_NAME, "", contentValues);
+
+                if(rowId > 0){
+                    Uri returnUri = StudentGuardianContract.SubjectEntry.buildSubjectUri(rowId);
+                    getContext().getContentResolver().notifyChange(returnUri, null);
+                    return returnUri;
+                }
         }
 
         throw new SQLException("Failed to add record into " + uri);
@@ -91,7 +117,16 @@ public class GeneralProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return db.update("user", contentValues, s, strings);
+    public int update(@NonNull Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        int match = uriMatcher.match(uri);
+
+        switch (match){
+            case USER:
+                return db.update(StudentGuardianContract.UserEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+            case SUBJECT:
+                return db.update(StudentGuardianContract.SubjectEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+            default:
+                return 0;
+        }
     }
 }

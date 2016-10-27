@@ -25,6 +25,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     StudentGuardianContract.UserEntry.COLUMN_DATE_BIRTH + " TEXT NOT NULL," +
                     StudentGuardianContract.UserEntry.COLUMN_LOGGED + " BIT NOT NULL);";
 
+    final String SQL_CREATE_SUBJECT_TABLE =
+            " CREATE TABLE " + StudentGuardianContract.SubjectEntry.TABLE_NAME +
+                    " (" + StudentGuardianContract.SubjectEntry.COLUMN_CODE + " INTEGER PRIMARY KEY NOT NULL, " +
+                    StudentGuardianContract.SubjectEntry.COLUMN_NAME + " TEXT NOT NULL);";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -32,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_SUBJECT_TABLE);
     }
 
     @Override

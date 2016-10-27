@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     new LoginTask(LoginActivity.this, user, coordinatorLogin).execute();
 
-                    //LoginSync.initializeSyncAdapter(LoginActivity.this);
+                    //DataSyncAdapter.initializeSyncAdapter(LoginActivity.this);
 
                     /*Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);

@@ -11,21 +11,21 @@ import android.util.Log;
 public class StudentGuardianSyncService extends Service {
 
     private static final Object sSyncAdapterLock = new Object();
-    private static LoginSync loginSync = null;
+    private static DataSyncAdapter dataSyncAdapter = null;
 
     @Override
     public void onCreate() {
         Log.d("SunshineSyncService", "onCreate - SunshineSyncService");
         synchronized (sSyncAdapterLock) {
-            if (loginSync == null) {
-                loginSync = new LoginSync(getApplicationContext(), true);
+            if (dataSyncAdapter == null) {
+                dataSyncAdapter = new DataSyncAdapter(getApplicationContext(), true);
             }
         }
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        return loginSync.getSyncAdapterBinder();
+        return dataSyncAdapter.getSyncAdapterBinder();
     }
 
 }
