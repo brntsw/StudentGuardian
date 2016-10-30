@@ -2,6 +2,7 @@ package bruno.udacity.com.studentguardian.ui.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
 import bruno.udacity.com.studentguardian.ui.fragment.DialogFragmentAbout;
 import bruno.udacity.com.studentguardian.ui.fragment.DialogFragmentEvaluate;
+import bruno.udacity.com.studentguardian.widget.SimpleWidgetProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -67,6 +69,15 @@ public class HomeActivity extends AppCompatActivity {
 
         if(user != null) {
             tvResponsibleName.setText(user.getName());
+        }
+
+        Cursor cursor = getContentResolver().query(StudentGuardianContract.StudentEntry.CONTENT_URI, null, null, null, StudentGuardianContract.StudentEntry.COLUMN_NAME);
+        if(cursor != null){
+            if(cursor.moveToNext()){
+                tvStudentName.setText(cursor.getString(cursor.getColumnIndex("name")));
+                updateWidget(cursor.getString(cursor.getColumnIndex("name")));
+                cursor.close();
+            }
         }
     }
 
@@ -159,5 +170,30 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void updateWidget(String studentName){
+        Cursor cursorEvaluation = getContentResolver().query(StudentGuardianContract.EvaluationEntry.CONTENT_URI, new String[]{"MIN(grade) as min_grade"}, null, null, null);
+        if(cursorEvaluation != null && cursorEvaluation.moveToNext()){
+            double lowestGrade = cursorEvaluation.getDouble(cursorEvaluation.getColumnIndex("min_grade"));
+            cursorEvaluation.close();
+
+            Cursor cursorNote = getContentResolver().query(StudentGuardianContract.NoteEntry.CONTENT_URI, null, null, null, StudentGuardianContract.NoteEntry.COLUMN_DATE);
+            if(cursorNote != null && cursorNote.moveToNext()){
+                String noteTitle = cursorNote.getString(cursorNote.getColumnIndex("title"));
+                String noteDescription = cursorNote.getString(cursorNote.getColumnIndex("description"));
+                String date = cursorNote.getString(cursorNote.getColumnIndex("date"));
+                cursorNote.close();
+
+                Intent i = new Intent(this, SimpleWidgetProvider.class);
+                i.setAction(SimpleWidgetProvider.UPDATE_ACTION);
+                i.putExtra("studentName", studentName);
+                i.putExtra("lowestGrade", lowestGrade);
+                i.putExtra("noteTitle", noteTitle);
+                i.putExtra("noteDescription", noteDescription);
+                i.putExtra("date", date);
+                sendBroadcast(i);
+            }
+        }
     }
 }
