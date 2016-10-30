@@ -24,14 +24,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         if(cursor != null) {
             if (cursor.moveToNext()) {
                 User user = new User();
-                user.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-                user.setPassword(cursor.getString(cursor.getColumnIndex("password")));
-                user.setDateBirth(cursor.getString(cursor.getColumnIndex("date_birth")));
-                user.setName(cursor.getString(cursor.getColumnIndex("name")));
-                user.setLogged(cursor.getInt(cursor.getColumnIndex("logged")));
+                user.setEmail(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.UserEntry.COLUMN_EMAIL)));
+                user.setPassword(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.UserEntry.COLUMN_PASSWORD)));
+                user.setDateBirth(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.UserEntry.COLUMN_DATE_BIRTH)));
+                user.setName(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.UserEntry.COLUMN_NAME)));
+                user.setLogged(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.UserEntry.COLUMN_LOGGED)));
 
                 intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
-                intent.putExtra("user", user);
+                intent.putExtra(getString(R.string.bundle_user), user);
             }
             else{
                 intent = new Intent(SplashScreenActivity.this, LoginActivity.class);

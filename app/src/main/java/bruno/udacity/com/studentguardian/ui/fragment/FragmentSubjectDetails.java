@@ -79,51 +79,51 @@ public class FragmentSubjectDetails extends Fragment {
     }
 
     private void addMockData(){
-        switch (args.getInt("codeSubject")){
+        switch (args.getInt(getString(R.string.bundle_code_subject))){
             case 100: //English
-                tvSubjectTitle.setText("English");
-                tvDescription.setText("This is a very cool description about the English subject, which is the best subject among all");
+                tvSubjectTitle.setText(getString(R.string.english));
+                tvDescription.setText(getString(R.string.english_description));
                 break;
             case 101: //Mathematics
-                tvSubjectTitle.setText("Mathematics");
-                tvDescription.setText("This is a very cool description about the Mathematics subject, which is the best subject among all");
+                tvSubjectTitle.setText(getString(R.string.mathematics));
+                tvDescription.setText(getString(R.string.mathematics_description));
                 break;
             case 102: //History
-                tvSubjectTitle.setText("History");
-                tvDescription.setText("This is a very cool description about the History subject, which is the best subject among all");
+                tvSubjectTitle.setText(getString(R.string.history));
+                tvDescription.setText(getString(R.string.history_description));
                 break;
             case 103: //Chemistry
-                tvSubjectTitle.setText("Chemistry");
-                tvDescription.setText("This is a very cool description about the Chemistry subject, which is the best subject among all");
+                tvSubjectTitle.setText(getString(R.string.chemistry));
+                tvDescription.setText(getString(R.string.chemistry_description));
                 break;
             case 104: //Physics
-                tvSubjectTitle.setText("Physics");
-                tvDescription.setText("This is a very cool description about the Physics subject, which is the best subject among all");
+                tvSubjectTitle.setText(getString(R.string.physics));
+                tvDescription.setText(getString(R.string.physics_description));
                 break;
             case 105: //Geography
-                tvSubjectTitle.setText("Geography");
-                tvDescription.setText("This is a very cool description about the Geography subject, which is the best subject among all");
+                tvSubjectTitle.setText(getString(R.string.geography));
+                tvDescription.setText(getString(R.string.geography_description));
                 break;
         }
 
         ContentClass content1 = new ContentClass();
-        content1.setContent("Today it was taught how to conjugate verbs");
-        content1.setDate("21/10/2016");
+        content1.setContent(getString(R.string.content1));
+        content1.setDate(getString(R.string.date1));
         contents.add(content1);
 
         ContentClass content2 = new ContentClass();
-        content2.setContent("Today it was taught the past tense verb");
-        content2.setDate("17/10/2016");
+        content2.setContent(getString(R.string.content2));
+        content2.setDate(getString(R.string.date2));
         contents.add(content2);
 
         ContentClass content3 = new ContentClass();
-        content3.setContent("Today it was taught the present tense");
-        content3.setDate("09/10/2016");
+        content3.setContent(getString(R.string.content3));
+        content3.setDate(getString(R.string.date3));
         contents.add(content3);
 
         ContentClass content4 = new ContentClass();
-        content4.setContent("Today it was taught the present continuous");
-        content4.setDate("25/09/2016");
+        content4.setContent(getString(R.string.content4));
+        content4.setDate(getString(R.string.date4));
         contents.add(content4);
     }
 

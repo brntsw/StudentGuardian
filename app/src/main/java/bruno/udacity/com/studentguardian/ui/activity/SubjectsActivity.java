@@ -51,7 +51,7 @@ public class SubjectsActivity extends AppCompatActivity {
         }
 
         Bundle args = new Bundle();
-        args.putString("activity", "subjectdetails");
+        args.putString(getString(R.string.bundle_activity), getString(R.string.bundle_subject_details));
 
         fragSubjects = new FragmentSubjects();
         fragSubjects.setArguments(args);

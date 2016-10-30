@@ -58,11 +58,11 @@ public class FragmentNoteDetails extends Fragment {
 
         args = getArguments();
 
-        final Note note = (Note) args.getSerializable("note");
+        final Note note = (Note) args.getSerializable(getString(R.string.note));
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Image");
-        progressDialog.setMessage("Downloading image...");
+        progressDialog.setTitle(getString(R.string.title_download_image));
+        progressDialog.setMessage(getString(R.string.msg_download_image));
 
         if(note != null) {
             //Download the image to a specific path
@@ -92,7 +92,7 @@ public class FragmentNoteDetails extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Note note = (Note) args.getSerializable("note");
+        Note note = (Note) args.getSerializable(getString(R.string.bundle_note));
 
         if(note != null){
             tvNoteTitle.setText(note.getTitle());

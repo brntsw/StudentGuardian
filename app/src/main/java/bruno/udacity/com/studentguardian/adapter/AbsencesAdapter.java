@@ -1,5 +1,6 @@
 package bruno.udacity.com.studentguardian.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +20,10 @@ import butterknife.ButterKnife;
 
 public class AbsencesAdapter extends RecyclerView.Adapter<AbsencesAdapter.ViewHolder> {
 
+    private Context context;
     private List<Absence> absences;
 
-    public AbsencesAdapter(List<Absence> absences){
+    public AbsencesAdapter(Context context, List<Absence> absences){
         this.absences = absences;
     }
 
@@ -59,22 +61,22 @@ public class AbsencesAdapter extends RecyclerView.Adapter<AbsencesAdapter.ViewHo
         void apply(Absence absence) {
             switch (absence.getCodeSubject()){
                 case 100: //English
-                    tvSubjectTitle.setText("English");
+                    tvSubjectTitle.setText(context.getString(R.string.english));
                     break;
                 case 101: //Mathematics
-                    tvSubjectTitle.setText("Mathematics");
+                    tvSubjectTitle.setText(context.getString(R.string.mathematics));
                     break;
                 case 102: //History
-                    tvSubjectTitle.setText("History");
+                    tvSubjectTitle.setText(context.getString(R.string.history));
                     break;
                 case 103: //Chemistry
-                    tvSubjectTitle.setText("Chemistry");
+                    tvSubjectTitle.setText(context.getString(R.string.chemistry));
                     break;
                 case 104: //Physics
-                    tvSubjectTitle.setText("Physics");
+                    tvSubjectTitle.setText(context.getString(R.string.physics));
                     break;
                 case 105: //Geography
-                    tvSubjectTitle.setText("Geography");
+                    tvSubjectTitle.setText(context.getString(R.string.geography));
                     break;
             }
 

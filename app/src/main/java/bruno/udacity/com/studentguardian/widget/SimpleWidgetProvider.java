@@ -33,11 +33,11 @@ public class SimpleWidgetProvider extends AppWidgetProvider {
         String action = intent.getAction();
         Bundle extras = intent.getExtras();
 
-        String studentName = extras.getString("studentName");
-        double lowestGrade = extras.getDouble("lowestGrade");
-        String noteTitle = extras.getString("noteTitle");
-        String noteDescription = extras.getString("noteDescription");
-        String date = extras.getString("date");
+        String studentName = extras.getString(context.getString(R.string.bundle_student_name));
+        double lowestGrade = extras.getDouble(context.getString(R.string.bundle_lowest_grade));
+        String noteTitle = extras.getString(context.getString(R.string.bundle_note_title));
+        String noteDescription = extras.getString(context.getString(R.string.bundle_note_description));
+        String date = extras.getString(context.getString(R.string.bundle_date));
 
         if(action != null && action.equals(UPDATE_ACTION)){
             final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);

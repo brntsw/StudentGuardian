@@ -51,4 +51,69 @@
     <string name="app_version">App version 1.0.0</string>
     <string name="app_rights_principal">Copyright @ StudentGuardian</string>
 
+    <!-- Subjects -->
+    <string name="english">English</string>
+    <string name="mathematics">Mathematics</string>
+    <string name="history">History</string>
+    <string name="chemistry">Chemistry</string>
+    <string name="physics">Physics</string>
+    <string name="geography">Geography</string>
+
+    <string name="english_description">This is a very cool description about the English subject, which is the best subject among all</string>
+    <string name="mathematics_description">This is a very cool description about the Mathematics subject, which is the best subject among all</string>
+    <string name="history_description">This is a very cool description about the History subject, which is the best subject among all</string>
+    <string name="chemistry_description">This is a very cool description about the Chemistry subject, which is the best subject among all</string>
+    <string name="physics_description">This is a very cool description about the Physics subject, which is the best subject among all</string>
+    <string name="geography_description">This is a very cool description about the Geography subject, which is the best subject among all</string>
+
+    <!-- Content classes -->
+    <string name="content1">Today it was taught how to conjugate verbs</string>
+    <string name="date1">21/10/2016</string>
+    <string name="content2">Today it was taught the past tense verb</string>
+    <string name="date2">17/10/2016</string>
+    <string name="content3">Today it was taught the present tense</string>
+    <string name="date3">09/10/2016</string>
+    <string name="content4">Today it was taught the present continuous</string>
+    <string name="date4">25/09/2016</string>
+
+    <!-- Bundle -->
+    <string name="bundle_activity">activity</string>
+    <string name="bundle_evaluations">evaluations</string>
+    <string name="bundle_code_subject">codeSubject</string>
+    <string name="bundle_note">note</string>
+    <string name="bundle_user">user</string>
+    <string name="bundle_student_name">studentName</string>
+    <string name="bundle_lowest_grade">lowestGrade</string>
+    <string name="bundle_note_title">noteTitle</string>
+    <string name="bundle_note_description">noteDescription</string>
+    <string name="bundle_date">date</string>
+    <string name="bundle_subject_details">subjectDetails</string>
+
+    <!-- General strings -->
+    <string name="student_pass">The student will pass!</string>
+    <string name="student_not_pass">The student will not pass!</string>
+    <string name="note">note</string>
+    <string name="title_download_image">Image</string>
+    <string name="msg_download_image">Downloading image&#8230;</string>
+    <string name="download_app">Download the app StudentGuardian at Google Play clicking on this link: https://play.google.com/store/apps/details?id=br.gov.sp.educacao.leitorresposta</string>
+    <string name="login_title">Login</string>
+    <string name="authenticating_user">Wait, authenticating user&#8230;</string>
+    <string name="title_data">Data</string>
+    <string name="downloading_data">Downloading data&#8230;</string>
+    <string name="user_not_found">User not found</string>
+
+    <!-- JSON related -->
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="name">name</string>
+    <string name="profile">profile</string>
+    <string name="date_birth">dateBirth</string>
+
+    <!-- Error messages -->
+    <string name="error">Error</string>
+    <string name="not_found">Not found</string>
+    <string name="not_available">Not available</string>
+    <string name="error_try_again">An error has occurred. Try again later</string>
+    <string name="service_not_available">The service is not available at this moment</string>
+
 </resources>

@@ -22,6 +22,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
 import bruno.udacity.com.studentguardian.remote.DataSyncAdapter;
@@ -32,6 +33,7 @@ import bruno.udacity.com.studentguardian.remote.DataSyncAdapter;
 
 public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
     public static final String LOG_TAG = "LoginTask";
+    private final String RESPONSE = "Response";
 
     private Context context;
     private User user;
@@ -48,8 +50,8 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
         super.onPreExecute();
 
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Login");
-        progressDialog.setMessage("Wait, authenticating user...");
+        progressDialog.setTitle(context.getString(R.string.login_title));
+        progressDialog.setMessage(context.getString(R.string.authenticating_user));
         progressDialog.show();
     }
 
@@ -68,8 +70,8 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
             URL url = new URL(uri.toString());
 
             JSONObject objParams = new JSONObject();
-            objParams.put("email", user.getEmail());
-            objParams.put("password", user.getPassword());
+            objParams.put(context.getString(R.string.email), user.getEmail());
+            objParams.put(context.getString(R.string.password), user.getPassword());
 
             urlConnection = (HttpURLConnection) url.openConnection();
             //set the sending type and receiving type to json
@@ -124,12 +126,12 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
                 JSONArray arrayUser = new JSONArray(result.getResultString());
                 JSONObject userJson = arrayUser.getJSONObject(0);
 
-                String email = userJson.getString("email");
+                String email = userJson.getString(context.getString(R.string.email));
 
                 if(!email.equals("")){
-                    String name = userJson.getString("name");
-                    int profile = userJson.getInt("profile");
-                    String dateBirth = userJson.getString("dateBirth");
+                    String name = userJson.getString(context.getString(R.string.name));
+                    int profile = userJson.getInt(context.getString(R.string.profile));
+                    String dateBirth = userJson.getString(context.getString(R.string.date_birth));
 
                     ContentValues userValues = new ContentValues();
                     userValues.put(StudentGuardianContract.UserEntry.COLUMN_EMAIL, email);
@@ -141,8 +143,8 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
 
                     context.getContentResolver().insert(StudentGuardianContract.UserEntry.CONTENT_URI, userValues);
 
-                    progressDialog.setTitle("Data");
-                    progressDialog.setMessage("Downloading data...");
+                    progressDialog.setTitle(context.getString(R.string.title_data));
+                    progressDialog.setMessage(context.getString(R.string.downloading_data));
                     progressDialog.show();
 
                     User user = new User();
@@ -161,8 +163,8 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
                         //pass the intent to the HomeActivity, which code is below
                 }
                 else{
-                    Log.d("Response", "Not found");
-                    Snackbar.make(coordinatorLayout, "User not found", Snackbar.LENGTH_SHORT).show();
+                    Log.d(RESPONSE, context.getString(R.string.not_found));
+                    Snackbar.make(coordinatorLayout, context.getString(R.string.user_not_found), Snackbar.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e){
@@ -173,20 +175,20 @@ public class LoginTask extends AsyncTask<Void, Void, JsonReturn> {
         else{
             switch (result.getReturnStatus()){
                 case JsonReturn.ERROR:
-                    Log.d("Response", "Error");
-                    Snackbar.make(coordinatorLayout, "An error has occurred. Try again later", Snackbar.LENGTH_SHORT).show();
+                    Log.d(RESPONSE, context.getString(R.string.error));
+                    Snackbar.make(coordinatorLayout, context.getString(R.string.error_try_again), Snackbar.LENGTH_SHORT).show();
                     break;
                 case JsonReturn.NOT_FOUND:
-                    Log.d("Response", "Not found");
-                    Snackbar.make(coordinatorLayout, "User not found", Snackbar.LENGTH_SHORT).show();
+                    Log.d(RESPONSE, context.getString(R.string.not_found));
+                    Snackbar.make(coordinatorLayout, context.getString(R.string.user_not_found), Snackbar.LENGTH_SHORT).show();
                     break;
                 case JsonReturn.NOT_AVAILABLE:
-                    Log.d("Response", "Not available");
-                    Snackbar.make(coordinatorLayout, "The service is not available at this moment", Snackbar.LENGTH_SHORT).show();
+                    Log.d(RESPONSE, context.getString(R.string.not_available));
+                    Snackbar.make(coordinatorLayout, context.getString(R.string.service_not_available), Snackbar.LENGTH_SHORT).show();
                     break;
                 default:
-                    Log.d("Response", "Error");
-                    Snackbar.make(coordinatorLayout, "An error has occurred. Try again later", Snackbar.LENGTH_SHORT).show();
+                    Log.d(RESPONSE, context.getString(R.string.error));
+                    Snackbar.make(coordinatorLayout, context.getString(R.string.error_try_again), Snackbar.LENGTH_SHORT).show();
                     break;
             }
         }

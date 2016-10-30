@@ -57,13 +57,13 @@ public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickLi
         if(cursor != null){
             while(cursor.moveToNext()){
                 Note note = new Note();
-                note.setId(cursor.getInt(cursor.getColumnIndex("code")));
-                note.setCodeSubject(cursor.getInt(cursor.getColumnIndex("code_subject")));
-                note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                note.setDate(cursor.getString(cursor.getColumnIndex("date")));
-                note.setColorGravity(cursor.getInt(cursor.getColumnIndex("gravity")));
-                note.setDescription(cursor.getString(cursor.getColumnIndex("description")));
-                note.setPathEvidenceImage(cursor.getString(cursor.getColumnIndex("path_evidence_image")));
+                note.setId(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_CODE)));
+                note.setCodeSubject(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_CODE_SUBJECT)));
+                note.setTitle(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_TITLE)));
+                note.setDate(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DATE)));
+                note.setColorGravity(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_GRAVITY)));
+                note.setDescription(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DESCRIPTION)));
+                note.setPathEvidenceImage(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_EVIDENCE_IMAGE)));
 
                 notes.add(note);
             }
@@ -91,7 +91,7 @@ public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickLi
         Note note = adapter.getItem(position);
 
         Bundle args = new Bundle();
-        args.putSerializable("note", note);
+        args.putSerializable(getString(R.string.bundle_note), note);
 
         fragNoteDetails = new FragmentNoteDetails();
         fragNoteDetails.setArguments(args);

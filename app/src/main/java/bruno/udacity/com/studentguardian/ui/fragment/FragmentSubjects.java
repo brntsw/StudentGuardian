@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +59,8 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
         if(cursor != null){
             while(cursor.moveToNext()){
                 Subject subject = new Subject();
-                subject.setCode(cursor.getInt(cursor.getColumnIndex("code")));
-                subject.setName(cursor.getString(cursor.getColumnIndex("name")));
+                subject.setCode(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.SubjectEntry.COLUMN_CODE)));
+                subject.setName(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.SubjectEntry.COLUMN_NAME)));
 
                 subjects.add(subject);
             }
@@ -89,10 +88,10 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
         Subject subject = adapter.getItem(position);
 
         if(args != null){
-            String activity = args.getString("activity");
+            String activity = args.getString(getString(R.string.bundle_activity));
 
             if(activity != null) {
-                args.putInt("codeSubject", subject.getCode());
+                args.putInt(getString(R.string.bundle_code_subject), subject.getCode());
                 switch (activity) {
                     case "evaluations":
                         FragmentEvaluations fragEvaluations = new FragmentEvaluations();

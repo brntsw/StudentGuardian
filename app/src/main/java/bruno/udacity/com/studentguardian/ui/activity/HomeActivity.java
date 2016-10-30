@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
 
         handleListeners();
 
-        user = (User) extras.getSerializable("user");
+        user = (User) extras.getSerializable(getString(R.string.bundle_user));
 
         if(user != null) {
             tvResponsibleName.setText(user.getName());
@@ -74,8 +74,8 @@ public class HomeActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(StudentGuardianContract.StudentEntry.CONTENT_URI, null, null, null, StudentGuardianContract.StudentEntry.COLUMN_NAME);
         if(cursor != null){
             if(cursor.moveToNext()){
-                tvStudentName.setText(cursor.getString(cursor.getColumnIndex("name")));
-                updateWidget(cursor.getString(cursor.getColumnIndex("name")));
+                tvStudentName.setText(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.StudentEntry.COLUMN_NAME)));
+                updateWidget(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.StudentEntry.COLUMN_NAME)));
                 cursor.close();
             }
         }
@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_share:
-                String shareText = "Download the app StudentGuardian at Google Play clicking on this link: https://play.google.com/store/apps/details?id=br.gov.sp.educacao.leitorresposta";
+                String shareText = getString(R.string.download_app);
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -180,18 +180,18 @@ public class HomeActivity extends AppCompatActivity {
 
             Cursor cursorNote = getContentResolver().query(StudentGuardianContract.NoteEntry.CONTENT_URI, null, null, null, StudentGuardianContract.NoteEntry.COLUMN_DATE);
             if(cursorNote != null && cursorNote.moveToNext()){
-                String noteTitle = cursorNote.getString(cursorNote.getColumnIndex("title"));
-                String noteDescription = cursorNote.getString(cursorNote.getColumnIndex("description"));
-                String date = cursorNote.getString(cursorNote.getColumnIndex("date"));
+                String noteTitle = cursorNote.getString(cursorNote.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_TITLE));
+                String noteDescription = cursorNote.getString(cursorNote.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DESCRIPTION));
+                String date = cursorNote.getString(cursorNote.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DATE));
                 cursorNote.close();
 
                 Intent i = new Intent(this, SimpleWidgetProvider.class);
                 i.setAction(SimpleWidgetProvider.UPDATE_ACTION);
-                i.putExtra("studentName", studentName);
-                i.putExtra("lowestGrade", lowestGrade);
-                i.putExtra("noteTitle", noteTitle);
-                i.putExtra("noteDescription", noteDescription);
-                i.putExtra("date", date);
+                i.putExtra(getString(R.string.bundle_student_name), studentName);
+                i.putExtra(getString(R.string.bundle_lowest_grade), lowestGrade);
+                i.putExtra(getString(R.string.bundle_note_title), noteTitle);
+                i.putExtra(getString(R.string.bundle_note_description), noteDescription);
+                i.putExtra(getString(R.string.bundle_date), date);
                 sendBroadcast(i);
             }
         }

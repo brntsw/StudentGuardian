@@ -1,20 +1,11 @@
 package bruno.udacity.com.studentguardian.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.FrameLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import bruno.udacity.com.studentguardian.R;
-import bruno.udacity.com.studentguardian.adapter.SubjectsAdapter;
-import bruno.udacity.com.studentguardian.model.Subject;
 import bruno.udacity.com.studentguardian.ui.fragment.FragmentSubjects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +47,7 @@ public class EvaluationsActivity extends AppCompatActivity {
         }
 
         Bundle args = new Bundle();
-        args.putString("activity", "evaluations");
+        args.putString(getString(R.string.bundle_activity), getString(R.string.bundle_evaluations));
 
         fragSubjects = new FragmentSubjects();
         fragSubjects.setArguments(args);

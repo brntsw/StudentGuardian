@@ -51,8 +51,8 @@ public class FragmentAbsences extends Fragment {
         if(cursorAbsence != null){
             while(cursorAbsence.moveToNext()){
                 Absence absence = new Absence();
-                absence.setCodeSubject(cursorAbsence.getInt(cursorAbsence.getColumnIndex("code_subject")));
-                absence.setCountAbsences(cursorAbsence.getInt(cursorAbsence.getColumnIndex("count_absences")));
+                absence.setCodeSubject(cursorAbsence.getInt(cursorAbsence.getColumnIndex(StudentGuardianContract.AbsenceEntry.COLUMN_CODE_SUBJECT)));
+                absence.setCountAbsences(cursorAbsence.getInt(cursorAbsence.getColumnIndex(StudentGuardianContract.AbsenceEntry.COLUMN_ABSENCES)));
 
                 absences.add(absence);
             }
@@ -60,7 +60,7 @@ public class FragmentAbsences extends Fragment {
             cursorAbsence.close();
         }
 
-        adapter = new AbsencesAdapter(absences);
+        adapter = new AbsencesAdapter(getActivity(), absences);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerAbsences.setLayoutManager(manager);
         recyclerAbsences.setItemAnimator(new DefaultItemAnimator());

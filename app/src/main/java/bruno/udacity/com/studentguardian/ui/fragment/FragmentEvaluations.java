@@ -58,7 +58,7 @@ public class FragmentEvaluations extends Fragment {
         evaluations = new ArrayList<>();
 
         Bundle bundle = getArguments();
-        codeSubject = bundle.getInt("codeSubject");
+        codeSubject = bundle.getInt(getString(R.string.bundle_code_subject));
 
         return view;
     }
@@ -69,20 +69,20 @@ public class FragmentEvaluations extends Fragment {
         Cursor cursorEvaluation = getActivity().getContentResolver().query(StudentGuardianContract.EvaluationEntry.CONTENT_URI, null, "code_subject = ?", new String[]{String.valueOf(codeSubject)}, StudentGuardianContract.EvaluationEntry.COLUMN_NAME);
         if(cursorEvaluation != null){
             while(cursorEvaluation.moveToNext()){
-                int codeTypeEvaluation = cursorEvaluation.getInt(cursorEvaluation.getColumnIndex("type_evaluation"));
+                int codeTypeEvaluation = cursorEvaluation.getInt(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_TYPE_EVALUATION));
                 Cursor cursorTypeEvaluation = getActivity().getContentResolver().query(StudentGuardianContract.TypeEvaluationEntry.CONTENT_URI, null, "code = ?", new String[]{String.valueOf(codeTypeEvaluation)}, null);
 
                 if(cursorTypeEvaluation != null && cursorTypeEvaluation.moveToNext()){
                     TypeEvaluation typeEvaluation = new TypeEvaluation();
-                    typeEvaluation.setCode(cursorTypeEvaluation.getInt(cursorTypeEvaluation.getColumnIndex("code")));
-                    typeEvaluation.setType(cursorTypeEvaluation.getString(cursorTypeEvaluation.getColumnIndex("type")));
+                    typeEvaluation.setCode(cursorTypeEvaluation.getInt(cursorTypeEvaluation.getColumnIndex(StudentGuardianContract.TypeEvaluationEntry.COLUMN_CODE)));
+                    typeEvaluation.setType(cursorTypeEvaluation.getString(cursorTypeEvaluation.getColumnIndex(StudentGuardianContract.TypeEvaluationEntry.COLUMN_TYPE)));
 
                     Evaluation evaluation = new Evaluation();
-                    evaluation.setCodeSubject(cursorEvaluation.getInt(cursorEvaluation.getColumnIndex("code_subject")));
+                    evaluation.setCodeSubject(cursorEvaluation.getInt(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_CODE_SUBJECT)));
                     evaluation.setTypeEvaluation(typeEvaluation);
-                    evaluation.setDescription(cursorEvaluation.getString(cursorEvaluation.getColumnIndex("description")));
-                    evaluation.setDate(cursorEvaluation.getString(cursorEvaluation.getColumnIndex("date")));
-                    evaluation.setGrade(cursorEvaluation.getDouble(cursorEvaluation.getColumnIndex("grade")));
+                    evaluation.setDescription(cursorEvaluation.getString(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_DESCRIPTION)));
+                    evaluation.setDate(cursorEvaluation.getString(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_DATE)));
+                    evaluation.setGrade(cursorEvaluation.getDouble(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_GRADE)));
 
                     evaluations.add(evaluation);
 
@@ -124,11 +124,11 @@ public class FragmentEvaluations extends Fragment {
 
         if(overallGrade < 6){
             tvOverallGrade.setTextColor(ContextCompat.getColor(getActivity(), R.color.gravity_urgent));
-            tvStudentStatus.setText("The student X will not pass!");
+            tvStudentStatus.setText(getString(R.string.student_pass));
         }
         else{
             tvOverallGrade.setTextColor(ContextCompat.getColor(getActivity(), R.color.gravity_not_serious));
-            tvStudentStatus.setText("The student X will pass");
+            tvStudentStatus.setText(getString(R.string.student_not_pass));
         }
     }
 
