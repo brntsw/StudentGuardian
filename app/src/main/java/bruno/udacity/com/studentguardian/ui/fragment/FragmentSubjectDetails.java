@@ -107,25 +107,21 @@ public class FragmentSubjectDetails extends Fragment {
         }
 
         ContentClass content1 = new ContentClass();
-        content1.setCodeSubject(100); //English
         content1.setContent("Today it was taught how to conjugate verbs");
         content1.setDate("21/10/2016");
         contents.add(content1);
 
         ContentClass content2 = new ContentClass();
-        content2.setCodeSubject(100); //English
         content2.setContent("Today it was taught the past tense verb");
         content2.setDate("17/10/2016");
         contents.add(content2);
 
         ContentClass content3 = new ContentClass();
-        content3.setCodeSubject(100); //English
         content3.setContent("Today it was taught the present tense");
         content3.setDate("09/10/2016");
         contents.add(content3);
 
         ContentClass content4 = new ContentClass();
-        content4.setCodeSubject(100); //English
         content4.setContent("Today it was taught the present continuous");
         content4.setDate("25/09/2016");
         contents.add(content4);

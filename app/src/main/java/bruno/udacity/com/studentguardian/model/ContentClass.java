@@ -6,16 +6,16 @@ package bruno.udacity.com.studentguardian.model;
 
 public class ContentClass {
 
-    private int codeSubject;
+    private int code;
     private String content;
     private String date;
 
-    public int getCodeSubject() {
-        return codeSubject;
+    public int getCode() {
+        return code;
     }
 
-    public void setCodeSubject(int codeSubject) {
-        this.codeSubject = codeSubject;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getContent() {

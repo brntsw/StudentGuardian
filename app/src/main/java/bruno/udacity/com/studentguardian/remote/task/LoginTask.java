@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.CoordinatorLayout;
@@ -26,7 +25,6 @@ import java.net.URL;
 import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
 import bruno.udacity.com.studentguardian.remote.DataSyncAdapter;
-import bruno.udacity.com.studentguardian.ui.activity.HomeActivity;
 
 /**
  * Created by BPardini on 25/10/2016.

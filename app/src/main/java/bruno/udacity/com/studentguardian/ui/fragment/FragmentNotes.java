@@ -1,6 +1,7 @@
 package bruno.udacity.com.studentguardian.ui.fragment;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.adapter.NotesAdapter;
+import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.Note;
 import bruno.udacity.com.studentguardian.ui.activity.listener.OnRecyclerViewItemClickListener;
 import butterknife.BindView;
@@ -51,7 +53,23 @@ public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickLi
     public void onStart(){
         super.onStart();
 
-        addMockData();
+        Cursor cursor = getActivity().getContentResolver().query(StudentGuardianContract.NoteEntry.CONTENT_URI, null, null, null, StudentGuardianContract.NoteEntry.COLUMN_DATE);
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                Note note = new Note();
+                note.setId(cursor.getInt(cursor.getColumnIndex("code")));
+                note.setCodeSubject(cursor.getInt(cursor.getColumnIndex("code_subject")));
+                note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                note.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                note.setColorGravity(cursor.getInt(cursor.getColumnIndex("gravity")));
+                note.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                note.setPathEvidenceImage(cursor.getString(cursor.getColumnIndex("path_evidence_image")));
+
+                notes.add(note);
+            }
+
+            cursor.close();
+        }
 
         //Fill the Recycler view with the notes
         adapter = new NotesAdapter(getActivity(), notes);
@@ -66,48 +84,6 @@ public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickLi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    private void addMockData(){
-        Note note1 = new Note();
-        note1.setId(1);
-        note1.setCodeSubject(100);
-        note1.setDate("19/10/2016");
-        note1.setTitle("Student X broke the vase from the director's room in purpose");
-        note1.setDescription("Aliquam augue nulla, posuere non sollicitudin a, accumsan vel odio. Vivamus tristique bibendum lorem ac suscipit. Maecenas et sagittis enim, accumsan facilisis libero. Sed finibus risus a lectus faucibus facilisis");
-        note1.setPathEvidenceImage("sdcard/randomimage.png");
-        note1.setColorGravity(R.color.gravity_urgent);
-        notes.add(note1);
-
-        Note note2 = new Note();
-        note2.setId(2);
-        note2.setCodeSubject(101);
-        note2.setDate("11/10/2016");
-        note2.setTitle("Student X ran away from school");
-        note2.setDescription("Aliquam augue nulla, posuere non sollicitudin a, accumsan vel odio. Vivamus tristique bibendum lorem ac suscipit. Maecenas et sagittis enim, accumsan facilisis libero. Sed finibus risus a lectus faucibus facilisis");
-        note2.setPathEvidenceImage("sdcard/randomimage.png");
-        note2.setColorGravity(R.color.gravity_urgent);
-        notes.add(note2);
-
-        Note note3 = new Note();
-        note3.setId(3);
-        note3.setCodeSubject(102);
-        note3.setDate("02/08/2016");
-        note3.setTitle("Student X got into a fight");
-        note3.setDescription("Aliquam augue nulla, posuere non sollicitudin a, accumsan vel odio. Vivamus tristique bibendum lorem ac suscipit. Maecenas et sagittis enim, accumsan facilisis libero. Sed finibus risus a lectus faucibus facilisis");
-        note3.setPathEvidenceImage("sdcard/randomimage.png");
-        note3.setColorGravity(R.color.gravity_urgent);
-        notes.add(note3);
-
-        Note note4 = new Note();
-        note4.setId(4);
-        note4.setCodeSubject(105);
-        note4.setDate("07/07/2016");
-        note4.setTitle("Student X is injured");
-        note4.setDescription("Aliquam augue nulla, posuere non sollicitudin a, accumsan vel odio. Vivamus tristique bibendum lorem ac suscipit. Maecenas et sagittis enim, accumsan facilisis libero. Sed finibus risus a lectus faucibus facilisis");
-        note4.setPathEvidenceImage("sdcard/randomimage.png");
-        note4.setColorGravity(R.color.gravity_alert);
-        notes.add(note4);
     }
 
     @Override

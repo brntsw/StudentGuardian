@@ -1,10 +1,10 @@
 package bruno.udacity.com.studentguardian.ui.fragment;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +19,7 @@ import java.util.List;
 
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.adapter.EvaluationsAdapter;
+import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.Evaluation;
 import bruno.udacity.com.studentguardian.model.TypeEvaluation;
 import butterknife.BindView;
@@ -65,7 +66,32 @@ public class FragmentEvaluations extends Fragment {
     public void onStart(){
         super.onStart();
 
-        addMockData();
+        Cursor cursorEvaluation = getActivity().getContentResolver().query(StudentGuardianContract.EvaluationEntry.CONTENT_URI, null, "code_subject = ?", new String[]{String.valueOf(codeSubject)}, StudentGuardianContract.EvaluationEntry.COLUMN_NAME);
+        if(cursorEvaluation != null){
+            while(cursorEvaluation.moveToNext()){
+                int codeTypeEvaluation = cursorEvaluation.getInt(cursorEvaluation.getColumnIndex("type_evaluation"));
+                Cursor cursorTypeEvaluation = getActivity().getContentResolver().query(StudentGuardianContract.TypeEvaluationEntry.CONTENT_URI, null, "code = ?", new String[]{String.valueOf(codeTypeEvaluation)}, null);
+
+                if(cursorTypeEvaluation != null && cursorTypeEvaluation.moveToNext()){
+                    TypeEvaluation typeEvaluation = new TypeEvaluation();
+                    typeEvaluation.setCode(cursorTypeEvaluation.getInt(cursorTypeEvaluation.getColumnIndex("code")));
+                    typeEvaluation.setType(cursorTypeEvaluation.getString(cursorTypeEvaluation.getColumnIndex("type")));
+
+                    Evaluation evaluation = new Evaluation();
+                    evaluation.setCodeSubject(cursorEvaluation.getInt(cursorEvaluation.getColumnIndex("code_subject")));
+                    evaluation.setTypeEvaluation(typeEvaluation);
+                    evaluation.setDescription(cursorEvaluation.getString(cursorEvaluation.getColumnIndex("description")));
+                    evaluation.setDate(cursorEvaluation.getString(cursorEvaluation.getColumnIndex("date")));
+                    evaluation.setGrade(cursorEvaluation.getDouble(cursorEvaluation.getColumnIndex("grade")));
+
+                    evaluations.add(evaluation);
+
+                    cursorTypeEvaluation.close();
+                }
+            }
+
+            cursorEvaluation.close();
+        }
 
         adapter = new EvaluationsAdapter(evaluations);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
@@ -76,44 +102,10 @@ public class FragmentEvaluations extends Fragment {
         setStudentOverall();
     }
 
-    public void addMockData(){
-        //Types of evaluation
-        TypeEvaluation typeEvaluation1 = new TypeEvaluation();
-        typeEvaluation1.setCode(1);
-        typeEvaluation1.setCodeSubject(codeSubject);
-        typeEvaluation1.setNameEvaluation("Evaluation XYZ Math");
-        typeEvaluation1.setType("Written test");
+    public void onDestroy(){
+        super.onDestroy();
 
-        TypeEvaluation typeEvaluation2 = new TypeEvaluation();
-        typeEvaluation2.setCode(2);
-        typeEvaluation2.setCodeSubject(codeSubject);
-        typeEvaluation2.setNameEvaluation("Evaluation GGH Math");
-        typeEvaluation2.setType("Homework");
-
-        //Evaluations
-        Evaluation evaluation1 = new Evaluation();
-        evaluation1.setDate("12/09/2016");
-        evaluation1.setCodeSubject(codeSubject);
-        evaluation1.setTypeEvaluation(typeEvaluation1);
-        evaluation1.setDescription("This is a math written test");
-        evaluation1.setGrade(3.5);
-        evaluations.add(evaluation1);
-
-        Evaluation evaluation2 = new Evaluation();
-        evaluation2.setDate("14/08/2016");
-        evaluation2.setCodeSubject(codeSubject);
-        evaluation2.setTypeEvaluation(typeEvaluation1);
-        evaluation2.setDescription("This is a math written test");
-        evaluation2.setGrade(6.9);
-        evaluations.add(evaluation2);
-
-        Evaluation evaluation3 = new Evaluation();
-        evaluation3.setDate("07/07/2016");
-        evaluation3.setCodeSubject(codeSubject);
-        evaluation3.setTypeEvaluation(typeEvaluation2);
-        evaluation3.setDescription("This is a math homework");
-        evaluation3.setGrade(5.1);
-        evaluations.add(evaluation3);
+        unbinder.unbind();
     }
 
     public void setStudentOverall(){

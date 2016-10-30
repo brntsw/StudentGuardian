@@ -32,4 +32,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.0.4'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

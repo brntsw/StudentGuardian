@@ -17,7 +17,6 @@ public class TypeEvaluation {
      * */
 
     private int code;
-    private int codeSubject;
     private String nameEvaluation;
     private String type;
 
@@ -27,14 +26,6 @@ public class TypeEvaluation {
 
     public void setCode(int code) {
         this.code = code;
-    }
-
-    public int getCodeSubject() {
-        return codeSubject;
-    }
-
-    public void setCodeSubject(int codeSubject) {
-        this.codeSubject = codeSubject;
     }
 
     public String getNameEvaluation() {

@@ -1,5 +1,6 @@
 package bruno.udacity.com.studentguardian.ui.fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.adapter.AbsencesAdapter;
-import bruno.udacity.com.studentguardian.adapter.SubjectsAdapter;
+import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.Absence;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +47,18 @@ public class FragmentAbsences extends Fragment {
     public void onStart() {
         super.onStart();
 
-        addMockData();
+        Cursor cursorAbsence = getActivity().getContentResolver().query(StudentGuardianContract.AbsenceEntry.CONTENT_URI, null, null, null, null);
+        if(cursorAbsence != null){
+            while(cursorAbsence.moveToNext()){
+                Absence absence = new Absence();
+                absence.setCodeSubject(cursorAbsence.getInt(cursorAbsence.getColumnIndex("code_subject")));
+                absence.setCountAbsences(cursorAbsence.getInt(cursorAbsence.getColumnIndex("count_absences")));
+
+                absences.add(absence);
+            }
+
+            cursorAbsence.close();
+        }
 
         adapter = new AbsencesAdapter(absences);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
@@ -59,22 +71,5 @@ public class FragmentAbsences extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    private void addMockData(){
-        Absence absence1 = new Absence();
-        absence1.setCodeSubject(100);
-        absence1.setCountAbsences(2);
-        absences.add(absence1);
-
-        Absence absence2 = new Absence();
-        absence2.setCodeSubject(102);
-        absence2.setCountAbsences(1);
-        absences.add(absence2);
-
-        Absence absence3 = new Absence();
-        absence3.setCodeSubject(105);
-        absence3.setCountAbsences(4);
-        absences.add(absence3);
     }
 }

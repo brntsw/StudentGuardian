@@ -1,14 +1,21 @@
 package bruno.udacity.com.studentguardian.ui.fragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.model.Note;
@@ -50,6 +57,34 @@ public class FragmentNoteDetails extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         args = getArguments();
+
+        final Note note = (Note) args.getSerializable("note");
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Image");
+        progressDialog.setMessage("Downloading image...");
+
+        if(note != null) {
+            //Download the image to a specific path
+            Picasso.with(getActivity()).load(note.getPathEvidenceImage()).into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    progressDialog.dismiss();
+                    imgProof.setImageBitmap(bitmap);
+                    //Utils.saveImageToExternalStorage(getActivity(), bitmap, note.getId());
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+                    Log.e("Error drawable", errorDrawable.toString());
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    progressDialog.show();
+                }
+            });
+        }
 
         return view;
     }
