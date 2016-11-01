@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.model.User;
 import bruno.udacity.com.studentguardian.remote.task.LoginTask;
@@ -38,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     //private GoogleApiClient mGoogleApiClient;
     private User user;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,14 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(getString(R.string.title_activity_login));
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        Bundle firebaseBundle = new Bundle();
+        firebaseBundle.putString(FirebaseAnalytics.Param.ITEM_ID, "home");
+        firebaseBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Home screen");
+        firebaseBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, firebaseBundle);
 
         /*mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)

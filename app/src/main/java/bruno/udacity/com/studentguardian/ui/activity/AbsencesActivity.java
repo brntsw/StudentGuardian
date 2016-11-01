@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.ui.fragment.FragmentAbsences;
 import bruno.udacity.com.studentguardian.ui.fragment.FragmentSubjects;
@@ -21,6 +23,7 @@ public class AbsencesActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     private FragmentAbsences fragAbsences;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -31,6 +34,14 @@ public class AbsencesActivity extends AppCompatActivity {
         setupComponents(savedInstanceState);
 
         setSupportActionBar(toolbar);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        Bundle firebaseBundle = new Bundle();
+        firebaseBundle.putString(FirebaseAnalytics.Param.ITEM_ID, "home");
+        firebaseBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Home screen");
+        firebaseBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, firebaseBundle);
     }
 
     protected void onResume(){
