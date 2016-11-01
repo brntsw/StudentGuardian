@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "816837246891",
+    "firebase_url": "https://studentguardian-148112.firebaseio.com",
+    "project_id": "studentguardian-148112",
+    "storage_bucket": "studentguardian-148112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816837246891:android:ef6a58525a846534",
+        "android_client_info": {
+          "package_name": "bruno.udacity.com.studentguardian"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "816837246891-047dcqokufi6i2s3e06uiammld8bcgr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRb4PJxDi_WBwH5WLHQk23KNkaBocrGVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

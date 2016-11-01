@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import bruno.udacity.com.studentguardian.R;
 import bruno.udacity.com.studentguardian.data.StudentGuardianContract;
 import bruno.udacity.com.studentguardian.model.User;
@@ -46,6 +48,8 @@ public class HomeActivity extends AppCompatActivity {
     private Bundle extras;
     private User user;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,14 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setTitle(getString(R.string.app_name));
 
         setSupportActionBar(toolbar);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        Bundle firebaseBundle = new Bundle();
+        firebaseBundle.putString(FirebaseAnalytics.Param.ITEM_ID, "home");
+        firebaseBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Home screen");
+        firebaseBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, firebaseBundle);
 
         extras = getIntent().getExtras();
     }

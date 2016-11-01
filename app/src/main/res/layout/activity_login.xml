@@ -79,22 +79,14 @@
 
         </LinearLayout>
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/bt_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/layout_password"/>
-
-        <!--<Button
+        <Button
             android:id="@+id/bt_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="50dp"
             android:text="Login"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/layout_password"/>-->
+            android:layout_below="@+id/layout_password"/>
 
     </RelativeLayout>
 
