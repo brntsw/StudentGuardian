@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,13 +13,13 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:text="Name of the student"/>
+        tools:text="Name of the student"/>
 
     <TextView
         android:id="@+id/tv_label_last_grade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Last grade:"
+        android:text="@string/label_last_grade"
         android:textSize="18sp"
         android:layout_toEndOf="@id/tv_student_name"
         android:paddingLeft="30dp"/>
@@ -27,7 +28,7 @@
         android:id="@+id/tv_lowest_grade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5.2"
+        tools:text="5.2"
         android:textSize="18sp"
         android:layout_toEndOf="@id/tv_label_last_grade"
         android:paddingLeft="5dp"/>
@@ -36,7 +37,7 @@
         android:id="@+id/tv_note_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title of the note"
+        tools:text="Title of the note"
         android:textStyle="bold"
         android:layout_below="@+id/tv_student_name"
         android:paddingTop="20dp"/>
@@ -45,7 +46,7 @@
         android:id="@+id/tv_note_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12/09/2016"
+        tools:text="12/09/2016"
         android:layout_toEndOf="@+id/tv_note_title"
         android:layout_below="@+id/tv_student_name"
         android:paddingTop="20dp"
@@ -56,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
-        android:text="dlk çlasdk  aslçdjask djlk djkasdjaks jkdasjld ash"
+        tools:text="dlk çlasdk  aslçdjask djlk djkasdjaks jkdasjld ash"
         android:layout_below="@+id/tv_note_title"/>
 
 </RelativeLayout>

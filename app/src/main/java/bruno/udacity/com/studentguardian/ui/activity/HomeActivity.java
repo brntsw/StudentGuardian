@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import bruno.udacity.com.studentguardian.R;
@@ -45,6 +47,9 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.tv_notes)
     TextView tvNotes;
 
+    @BindView(R.id.adView)
+    AdView adView;
+
     private Bundle extras;
     private User user;
 
@@ -67,6 +72,12 @@ public class HomeActivity extends AppCompatActivity {
         firebaseBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Home screen");
         firebaseBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, firebaseBundle);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice(getString(R.string.banner_ad_id))
+                .build();
+        adView.loadAd(adRequest);
 
         extras = getIntent().getExtras();
     }
