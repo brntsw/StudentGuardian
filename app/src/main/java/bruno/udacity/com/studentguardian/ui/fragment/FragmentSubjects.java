@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +31,7 @@ import butterknife.Unbinder;
  * Created by BPardini on 19/10/2016.
  */
 
-public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClickListener {
+public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.recycler_grades)
     RecyclerView recyclerSubjects;
@@ -37,6 +41,13 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
 
     private Unbinder unbinder;
     private Bundle args;
+
+    private static final int SUBJECT_LOADER = 0;
+
+    private static final String[] SUBJECT_COLUMNS = {
+            StudentGuardianContract.SubjectEntry.COLUMN_CODE,
+            StudentGuardianContract.StudentEntry.COLUMN_NAME
+    };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         Activity activity = getActivity();
@@ -49,32 +60,18 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
 
         args = getArguments();
 
+        getLoaderManager().restartLoader(SUBJECT_LOADER, null, this);
+
         return view;
     }
 
     public void onStart(){
         super.onStart();
+    }
 
-        Cursor cursor = getActivity().getContentResolver().query(StudentGuardianContract.SubjectEntry.CONTENT_URI, null, null, null, StudentGuardianContract.SubjectEntry.COLUMN_NAME);
-        if(cursor != null){
-            while(cursor.moveToNext()){
-                Subject subject = new Subject();
-                subject.setCode(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.SubjectEntry.COLUMN_CODE)));
-                subject.setName(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.SubjectEntry.COLUMN_NAME)));
-
-                subjects.add(subject);
-            }
-
-            cursor.close();
-        }
-
-        //Fill the Recycler view with the subjects
-        adapter = new SubjectsAdapter(subjects);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerSubjects.setLayoutManager(manager);
-        recyclerSubjects.setItemAnimator(new DefaultItemAnimator());
-        recyclerSubjects.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
+    public void onActivityCreated(Bundle savedInstanceState){
+        getLoaderManager().initLoader(SUBJECT_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -116,5 +113,42 @@ public class FragmentSubjects extends Fragment implements OnRecyclerViewItemClic
                 }
             }
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+            getActivity(),
+                StudentGuardianContract.SubjectEntry.CONTENT_URI,
+                SUBJECT_COLUMNS,
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data != null){
+            while(data.moveToNext()){
+                Subject subject = new Subject();
+                subject.setCode(data.getInt(data.getColumnIndex(StudentGuardianContract.SubjectEntry.COLUMN_CODE)));
+                subject.setName(data.getString(data.getColumnIndex(StudentGuardianContract.SubjectEntry.COLUMN_NAME)));
+
+                subjects.add(subject);
+
+                //Fill the Recycler view with the subjects
+                adapter = new SubjectsAdapter(subjects);
+                RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+                recyclerSubjects.setLayoutManager(manager);
+                recyclerSubjects.setItemAnimator(new DefaultItemAnimator());
+                recyclerSubjects.setAdapter(adapter);
+                adapter.setOnItemClickListener(this);
+            }
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
     }
 }

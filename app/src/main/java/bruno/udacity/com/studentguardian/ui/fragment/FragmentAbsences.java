@@ -3,6 +3,9 @@ package bruno.udacity.com.studentguardian.ui.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +28,7 @@ import butterknife.Unbinder;
  * Created by BPardini on 20/10/2016.
  */
 
-public class FragmentAbsences extends Fragment {
+public class FragmentAbsences extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.recycler_absences)
     RecyclerView recyclerAbsences;
@@ -34,6 +37,12 @@ public class FragmentAbsences extends Fragment {
     private List<Absence> absences;
 
     private Unbinder unbinder;
+    private static final int ABSENCE_LOADER = 0;
+
+    private static final String[] ABSENCE_COLUMNS = {
+            StudentGuardianContract.AbsenceEntry.COLUMN_ABSENCES,
+            StudentGuardianContract.AbsenceEntry.COLUMN_CODE_SUBJECT
+    };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_absences, container, false);
@@ -41,23 +50,43 @@ public class FragmentAbsences extends Fragment {
 
         absences = new ArrayList<>();
 
+        getLoaderManager().restartLoader(ABSENCE_LOADER, null, this);
+
         return view;
     }
 
     public void onStart() {
         super.onStart();
+    }
 
-        Cursor cursorAbsence = getActivity().getContentResolver().query(StudentGuardianContract.AbsenceEntry.CONTENT_URI, null, null, null, null);
-        if(cursorAbsence != null){
-            while(cursorAbsence.moveToNext()){
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                getActivity(),
+                StudentGuardianContract.AbsenceEntry.CONTENT_URI,
+                ABSENCE_COLUMNS,
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data != null){
+            while(data.moveToNext()){
                 Absence absence = new Absence();
-                absence.setCodeSubject(cursorAbsence.getInt(cursorAbsence.getColumnIndex(StudentGuardianContract.AbsenceEntry.COLUMN_CODE_SUBJECT)));
-                absence.setCountAbsences(cursorAbsence.getInt(cursorAbsence.getColumnIndex(StudentGuardianContract.AbsenceEntry.COLUMN_ABSENCES)));
+                absence.setCodeSubject(data.getInt(data.getColumnIndex(StudentGuardianContract.AbsenceEntry.COLUMN_CODE_SUBJECT)));
+                absence.setCountAbsences(data.getInt(data.getColumnIndex(StudentGuardianContract.AbsenceEntry.COLUMN_ABSENCES)));
 
                 absences.add(absence);
             }
-
-            cursorAbsence.close();
         }
 
         adapter = new AbsencesAdapter(getActivity(), absences);
@@ -68,8 +97,7 @@ public class FragmentAbsences extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

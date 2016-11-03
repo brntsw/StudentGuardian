@@ -24,6 +24,7 @@ public class AbsencesAdapter extends RecyclerView.Adapter<AbsencesAdapter.ViewHo
     private List<Absence> absences;
 
     public AbsencesAdapter(Context context, List<Absence> absences){
+        this.context = context;
         this.absences = absences;
     }
 

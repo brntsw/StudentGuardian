@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +30,7 @@ import butterknife.Unbinder;
  * Created by BPardini on 19/10/2016.
  */
 
-public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickListener {
+public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.recycler_notes)
     RecyclerView recyclerNotes;
@@ -37,6 +40,17 @@ public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickLi
     private NotesAdapter adapter;
 
     private FragmentNoteDetails fragNoteDetails;
+    private static final int NOTE_LOADER = 0;
+
+    private static final String[] NOTE_COLUMNS = {
+            StudentGuardianContract.NoteEntry.COLUMN_CODE,
+            StudentGuardianContract.NoteEntry.COLUMN_CODE_SUBJECT,
+            StudentGuardianContract.NoteEntry.COLUMN_DATE,
+            StudentGuardianContract.NoteEntry.COLUMN_DESCRIPTION,
+            StudentGuardianContract.NoteEntry.COLUMN_EVIDENCE_IMAGE,
+            StudentGuardianContract.NoteEntry.COLUMN_GRAVITY,
+            StudentGuardianContract.NoteEntry.COLUMN_TITLE
+    };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         Activity activity = getActivity();
@@ -47,37 +61,13 @@ public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickLi
 
         notes = new ArrayList<>();
 
+        getLoaderManager().restartLoader(NOTE_LOADER, null, this);
+
         return view;
     }
 
     public void onStart(){
         super.onStart();
-
-        Cursor cursor = getActivity().getContentResolver().query(StudentGuardianContract.NoteEntry.CONTENT_URI, null, null, null, StudentGuardianContract.NoteEntry.COLUMN_DATE);
-        if(cursor != null){
-            while(cursor.moveToNext()){
-                Note note = new Note();
-                note.setId(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_CODE)));
-                note.setCodeSubject(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_CODE_SUBJECT)));
-                note.setTitle(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_TITLE)));
-                note.setDate(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DATE)));
-                note.setColorGravity(cursor.getInt(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_GRAVITY)));
-                note.setDescription(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DESCRIPTION)));
-                note.setPathEvidenceImage(cursor.getString(cursor.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_EVIDENCE_IMAGE)));
-
-                notes.add(note);
-            }
-
-            cursor.close();
-        }
-
-        //Fill the Recycler view with the notes
-        adapter = new NotesAdapter(getActivity(), notes);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerNotes.setLayoutManager(manager);
-        recyclerNotes.setItemAnimator(new DefaultItemAnimator());
-        recyclerNotes.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -100,5 +90,48 @@ public class FragmentNotes extends Fragment implements OnRecyclerViewItemClickLi
                 .replace(R.id.fragment_container, fragNoteDetails, FragmentNoteDetails.TAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                getActivity(),
+                StudentGuardianContract.NoteEntry.CONTENT_URI,
+                NOTE_COLUMNS,
+                null,
+                null,
+                StudentGuardianContract.NoteEntry.COLUMN_DATE
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data != null){
+            while(data.moveToNext()){
+                Note note = new Note();
+                note.setId(data.getInt(data.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_CODE)));
+                note.setCodeSubject(data.getInt(data.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_CODE_SUBJECT)));
+                note.setTitle(data.getString(data.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_TITLE)));
+                note.setDate(data.getString(data.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DATE)));
+                note.setColorGravity(data.getInt(data.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_GRAVITY)));
+                note.setDescription(data.getString(data.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_DESCRIPTION)));
+                note.setPathEvidenceImage(data.getString(data.getColumnIndex(StudentGuardianContract.NoteEntry.COLUMN_EVIDENCE_IMAGE)));
+
+                notes.add(note);
+
+                //Fill the Recycler view with the notes
+                adapter = new NotesAdapter(getActivity(), notes);
+                RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+                recyclerNotes.setLayoutManager(manager);
+                recyclerNotes.setItemAnimator(new DefaultItemAnimator());
+                recyclerNotes.setAdapter(adapter);
+                adapter.setOnItemClickListener(this);
+            }
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

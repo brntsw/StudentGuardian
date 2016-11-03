@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +33,7 @@ import butterknife.Unbinder;
  * Created by BPardini on 20/10/2016.
  */
 
-public class FragmentEvaluations extends Fragment {
+public class FragmentEvaluations extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String TAG = "FragmentEvaluations";
 
@@ -48,6 +51,19 @@ public class FragmentEvaluations extends Fragment {
     private EvaluationsAdapter adapter;
     private List<Evaluation> evaluations;
 
+    private static final int EVALUATION_LOADER = 0;
+
+    private static final String[] EVALUATION_COLUMNS = {
+            StudentGuardianContract.EvaluationEntry.COLUMN_CODE,
+            StudentGuardianContract.EvaluationEntry.COLUMN_CODE_SUBJECT,
+            StudentGuardianContract.EvaluationEntry.COLUMN_NAME,
+            StudentGuardianContract.EvaluationEntry.COLUMN_DESCRIPTION,
+            StudentGuardianContract.EvaluationEntry.COLUMN_DATE,
+            StudentGuardianContract.EvaluationEntry.COLUMN_GRADE,
+            StudentGuardianContract.EvaluationEntry.COLUMN_TYPE_EVALUATION
+    };
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         Activity activity = getActivity();
         activity.setTitle(R.string.description_evaluations);
@@ -60,46 +76,13 @@ public class FragmentEvaluations extends Fragment {
         Bundle bundle = getArguments();
         codeSubject = bundle.getInt(getString(R.string.bundle_code_subject));
 
+        getLoaderManager().restartLoader(EVALUATION_LOADER, null, this);
+
         return view;
     }
 
     public void onStart(){
         super.onStart();
-
-        Cursor cursorEvaluation = getActivity().getContentResolver().query(StudentGuardianContract.EvaluationEntry.CONTENT_URI, null, "code_subject = ?", new String[]{String.valueOf(codeSubject)}, StudentGuardianContract.EvaluationEntry.COLUMN_NAME);
-        if(cursorEvaluation != null){
-            while(cursorEvaluation.moveToNext()){
-                int codeTypeEvaluation = cursorEvaluation.getInt(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_TYPE_EVALUATION));
-                Cursor cursorTypeEvaluation = getActivity().getContentResolver().query(StudentGuardianContract.TypeEvaluationEntry.CONTENT_URI, null, "code = ?", new String[]{String.valueOf(codeTypeEvaluation)}, null);
-
-                if(cursorTypeEvaluation != null && cursorTypeEvaluation.moveToNext()){
-                    TypeEvaluation typeEvaluation = new TypeEvaluation();
-                    typeEvaluation.setCode(cursorTypeEvaluation.getInt(cursorTypeEvaluation.getColumnIndex(StudentGuardianContract.TypeEvaluationEntry.COLUMN_CODE)));
-                    typeEvaluation.setType(cursorTypeEvaluation.getString(cursorTypeEvaluation.getColumnIndex(StudentGuardianContract.TypeEvaluationEntry.COLUMN_TYPE)));
-
-                    Evaluation evaluation = new Evaluation();
-                    evaluation.setCodeSubject(cursorEvaluation.getInt(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_CODE_SUBJECT)));
-                    evaluation.setTypeEvaluation(typeEvaluation);
-                    evaluation.setDescription(cursorEvaluation.getString(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_DESCRIPTION)));
-                    evaluation.setDate(cursorEvaluation.getString(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_DATE)));
-                    evaluation.setGrade(cursorEvaluation.getDouble(cursorEvaluation.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_GRADE)));
-
-                    evaluations.add(evaluation);
-
-                    cursorTypeEvaluation.close();
-                }
-            }
-
-            cursorEvaluation.close();
-        }
-
-        adapter = new EvaluationsAdapter(evaluations);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerEvaluations.setLayoutManager(manager);
-        recyclerEvaluations.setItemAnimator(new DefaultItemAnimator());
-        recyclerEvaluations.setAdapter(adapter);
-
-        setStudentOverall();
     }
 
     public void onDestroy(){
@@ -132,4 +115,55 @@ public class FragmentEvaluations extends Fragment {
         }
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                getActivity(),
+                StudentGuardianContract.EvaluationEntry.CONTENT_URI,
+                EVALUATION_COLUMNS,
+                "code_subject = ?",
+                new String[]{String.valueOf(codeSubject)},
+                StudentGuardianContract.EvaluationEntry.COLUMN_NAME
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data != null){
+            while(data.moveToNext()){
+                int codeTypeEvaluation = data.getInt(data.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_TYPE_EVALUATION));
+                Cursor cursorTypeEvaluation = getActivity().getContentResolver().query(StudentGuardianContract.TypeEvaluationEntry.CONTENT_URI, null, "code = ?", new String[]{String.valueOf(codeTypeEvaluation)}, null);
+
+                if(cursorTypeEvaluation != null && cursorTypeEvaluation.moveToNext()){
+                    TypeEvaluation typeEvaluation = new TypeEvaluation();
+                    typeEvaluation.setCode(cursorTypeEvaluation.getInt(cursorTypeEvaluation.getColumnIndex(StudentGuardianContract.TypeEvaluationEntry.COLUMN_CODE)));
+                    typeEvaluation.setType(cursorTypeEvaluation.getString(cursorTypeEvaluation.getColumnIndex(StudentGuardianContract.TypeEvaluationEntry.COLUMN_TYPE)));
+
+                    Evaluation evaluation = new Evaluation();
+                    evaluation.setCodeSubject(data.getInt(data.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_CODE_SUBJECT)));
+                    evaluation.setTypeEvaluation(typeEvaluation);
+                    evaluation.setDescription(data.getString(data.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_DESCRIPTION)));
+                    evaluation.setDate(data.getString(data.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_DATE)));
+                    evaluation.setGrade(data.getDouble(data.getColumnIndex(StudentGuardianContract.EvaluationEntry.COLUMN_GRADE)));
+
+                    evaluations.add(evaluation);
+
+                    cursorTypeEvaluation.close();
+                }
+            }
+        }
+
+        adapter = new EvaluationsAdapter(evaluations);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        recyclerEvaluations.setLayoutManager(manager);
+        recyclerEvaluations.setItemAnimator(new DefaultItemAnimator());
+        recyclerEvaluations.setAdapter(adapter);
+
+        setStudentOverall();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
 }
